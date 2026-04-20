@@ -63,6 +63,7 @@
   .pill.t6.active { background: #fb923c; color: #000; border-color: #fb923c; }
   .pill.t7.active { background: #e879f9; color: #000; border-color: #e879f9; }
   .pill.t8.active { background: #60a5fa; color: #000; border-color: #60a5fa; }
+  .pill.t9.active { background: #f0abfc; color: #000; border-color: #f0abfc; }
 
   /* MODE + CONTROLS */
   .mode-row { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
@@ -89,6 +90,7 @@
   .q-card.t1{border-left-color:#00e5ff}.q-card.t2{border-left-color:#ff6b6b}.q-card.t3{border-left-color:#a78bfa}
   .q-card.t4{border-left-color:#34d399}.q-card.t5{border-left-color:#ffd60a}.q-card.t6{border-left-color:#fb923c}
   .q-card.t7{border-left-color:#e879f9}.q-card.t8{border-left-color:#60a5fa}
+  .q-card.t9{border-left-color:#f0abfc}
 
   .q-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
   .q-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
@@ -100,6 +102,7 @@
   .t3-label{background:rgba(167,139,250,.12);color:#a78bfa}.t4-label{background:rgba(52,211,153,.12);color:#34d399}
   .t5-label{background:rgba(255,214,10,.12);color:#ffd60a}.t6-label{background:rgba(251,146,60,.12);color:#fb923c}
   .t7-label{background:rgba(232,121,249,.12);color:#e879f9}.t8-label{background:rgba(96,165,250,.12);color:#60a5fa}
+  .t9-label{background:rgba(240,171,252,.12);color:#f0abfc}
 
   .q-text { font-size: 15px; font-weight: 600; line-height: 1.65; margin-bottom: 18px; color: #f1f5f9; }
 
@@ -143,7 +146,7 @@
 <div class="container">
 
 <header>
-  <div class="tag">MR. STEP CHANGER · COMP ARCH & ORG · FULL STUDY PACK</div>
+  <div class="tag">MR. THOMAS KWANTWI · COMP ARCH & ORG · FULL STUDY PACK</div>
   <h1>Computer Architecture<br>&amp; Organisation</h1>
   <p class="subtitle">// MCQs + Theory Questions — separated for exam focus</p>
   <div class="stats-bar">
@@ -174,6 +177,7 @@
       <div class="pill t6" data-topic="6">6 · Memory II</div>
       <div class="pill t7" data-topic="7">7 · I/O Design</div>
       <div class="pill t8" data-topic="8">8 · Pipelining</div>
+      <div class="pill t9" data-topic="9">9 · Past Paper</div>
     </div>
   </div>
   <div class="mode-row">
@@ -208,6 +212,7 @@
       <div class="pill t6" data-topic="6">6 · Memory II</div>
       <div class="pill t7" data-topic="7">7 · I/O Design</div>
       <div class="pill t8" data-topic="8">8 · Pipelining</div>
+      <div class="pill t9" data-topic="9">9 · Past Paper</div>
     </div>
   </div>
   <div class="controls-row">
@@ -233,6 +238,7 @@ const TOPICS = {
   6:{name:"Memory System II",color:"t6",label:"t6-label"},
   7:{name:"I/O Design",color:"t7",label:"t7-label"},
   8:{name:"Pipelining",color:"t8",label:"t8-label"},
+  9:{name:"Past Paper Style",color:"t9",label:"t9-label"},
 };
 
 // ===================== MCQ QUESTIONS =====================
@@ -528,372 +534,419 @@ const ALL_MCQ = [
 {id:71,topic:8,diff:"medium",q:"Cache memory acts between which of the following?",
  options:["CPU and RAM","RAM and ROM","CPU and Hard Disk","GPU and CPU"],
  answer:0,explanation:"Cache memory sits between the CPU and RAM (main memory), bridging the speed gap between the fast processor and slower main memory."},
+
+// ---- TOPIC 9: PAST PAPER STYLE ----
+{id:72,topic:9,diff:"medium",q:"What are registers?",
+ options:["Small, fast storage locations inside the CPU that hold data and addresses temporarily during execution","Large memory chips on the motherboard","Secondary storage devices","Part of the hard disk cache"],
+ answer:0,explanation:"Registers are the CPU's own small, very fast internal storage locations. They hold operands, addresses, and intermediate results currently being processed."},
+
+{id:73,topic:9,diff:"easy",q:"Which of the following is a general-purpose register?",
+ options:["Program Counter (PC)","Stack Pointer (SP)","Accumulator (ACC)","Instruction Register (IR)"],
+ answer:2,explanation:"The Accumulator is a general-purpose register used to hold operands and results of arithmetic/logic operations. PC, SP, and IR are all special-purpose registers."},
+
+{id:74,topic:9,diff:"medium",q:"What is DMA (Direct Memory Access)?",
+ options:["A way for the CPU to access cache faster","A method allowing a dedicated controller to transfer data between I/O devices and memory without CPU involvement","A type of ROM","A bus protocol"],
+ answer:1,explanation:"DMA allows a dedicated DMA controller to handle large data transfers between I/O devices and main memory directly, freeing the CPU for other tasks."},
+
+{id:75,topic:9,diff:"medium",q:"Which of the following is a constituent of a DMA controller?",
+ options:["Instruction Register","Address Register","Program Counter","Stack Pointer"],
+ answer:1,explanation:"A DMA controller contains an Address Register (to track where in memory to read/write), a Word Count Register, and a Data Register — not a PC or IR (those belong to the CPU)."},
+
+{id:76,topic:9,diff:"medium",q:"Adding the two floating-point numbers 1.1100×2⁴ and 1.1000×2² requires which first step?",
+ options:["Adding the mantissas directly","Aligning the exponents by shifting the smaller number","Multiplying the mantissas","Subtracting the exponents"],
+ answer:1,explanation:"In floating-point addition, both numbers must first be aligned to the same exponent. The number with the smaller exponent is right-shifted until both exponents match, then mantissas are added."},
+
+{id:77,topic:9,diff:"hard",q:"For an Intel Pentium IV L1 cache: 4-way set-associative, 64-byte block, 8KB data cache, 16MB main memory — how many bits are used for the BLOCK OFFSET field?",
+ options:["4 bits","6 bits","8 bits","10 bits"],
+ answer:1,explanation:"Block size = 64 bytes = 2⁶, so the block offset field requires 6 bits to address any byte within the block."},
+
+{id:78,topic:9,diff:"hard",q:"For the same Pentium IV L1 cache (8KB, 4-way set-associative, 64-byte block), how many sets are there?",
+ options:["16 sets","32 sets","64 sets","128 sets"],
+ answer:1,explanation:"Total cache lines = 8KB ÷ 64B = 128 lines. With 4-way set-associative, sets = 128 ÷ 4 = 32 sets. The index field = log₂(32) = 5 bits."},
+
+{id:79,topic:9,diff:"medium",q:"Which condition does NOT normally cause a CPU interrupt?",
+ options:["Arithmetic overflow","Completion of a DMA transfer","A cache hit","An illegal instruction code"],
+ answer:2,explanation:"A cache hit is a normal fast memory access — it does not cause an interrupt. Interrupts are caused by exceptional events: overflow, DMA completion, illegal instructions, power failure, etc."},
+
+{id:80,topic:9,diff:"easy",q:"The memory hierarchy exists primarily because:",
+ options:["Fast memory is cheap but large","Fast memory is expensive, so a balance of speed and cost is needed across levels","Hard disks are faster than RAM","The CPU can only access secondary storage"],
+ answer:1,explanation:"Fast memory (SRAM/registers) is very expensive. Slow memory (disk) is cheap but too slow. The hierarchy balances speed, capacity and cost — keeping frequently used data in faster, smaller, more expensive levels."},
+
+{id:81,topic:9,diff:"medium",q:"In Memory-Mapped I/O, which processor family is known to adopt this approach?",
+ options:["Intel (x86)","ARM Cortex-M only","Motorola","RISC-V only"],
+ answer:2,explanation:"Motorola adopted Memory-Mapped I/O (devices share the memory address space, accessed with regular load/store instructions). Intel adopted Isolated (Shared) I/O with separate IN/OUT instructions."},
 ];
 
 // ===================== THEORY QUESTIONS =====================
 const ALL_THEORY = [
 // ---- TOPIC 1: INTRODUCTION ----
-{id:101,topic:1,diff:"hard",marks:10,
- q:"Define Computer Architecture and Computer Organisation. Clearly distinguish between the two concepts and give two examples of attributes that fall under each.",
- hint:"Think: what does the programmer see vs. what does the hardware engineer implement?",
- answer:`<strong>Computer Architecture</strong> refers to those attributes of a computer system that are <em>visible to the software programmer</em> and have a direct impact on the logical execution of a program. Examples include: the instruction set (opcodes available), the number of bits used to represent data types (e.g. 32-bit vs 64-bit integers), memory addressing techniques, and I/O methods.<br><br>
-<strong>Computer Organisation</strong> refers to the operational units and their interconnections that <em>realise the architectural specification</em> — these details are transparent to the programmer. Examples include: how control signals work, the memory technology used (e.g. DRAM vs SRAM), bus widths, and whether the CPU uses hardwired or microprogrammed control.<br><br>
-<strong>Key distinction:</strong> Two machines can have the same architecture (same instruction set) but different organisations (e.g. different bus speeds, memory technologies). For example, all IBM 360 family machines shared the same architecture but had very different organisations.`},
+{id:101,topic:1,diff:"easy",marks:6,
+ q:"What is the difference between Computer Architecture and Computer Organisation? Give one example of each.",
+ hint:"Architecture = what the programmer sees. Organisation = how the hardware implements it.",
+ answer:`<strong>Computer Architecture</strong> refers to the parts of a computer visible to the programmer — things that directly affect how programs run. Example: the instruction set (which commands the CPU can execute) or the number of bits used for data (e.g. 32-bit vs 64-bit).<br><br>
+<strong>Computer Organisation</strong> refers to how the hardware is built and connected to carry out the architecture. These details are hidden from the programmer. Example: the bus width used internally, or how memory chips are wired together.<br><br>
+<strong>Simple way to remember:</strong> Two computers can have the same architecture (same instructions) but different organisations (different internal hardware).`},
 
-{id:102,topic:1,diff:"medium",marks:8,
- q:"Classify and describe the four main types of computers by size and power. For each, state the typical user capacity and a distinguishing characteristic.",
- hint:"Personal → Mini → Mainframe → Supercomputer",
- answer:`<strong>1. Personal Computer (PC):</strong> A small, single-user computer based on a microprocessor. Includes a keyboard, monitor, and storage device. Designed for one user at a time.<br><br>
-<strong>2. Minicomputer:</strong> A multi-user computer capable of supporting from 10 to hundreds of users simultaneously. More powerful than a PC but smaller than a mainframe.<br><br>
-<strong>3. Mainframe:</strong> A powerful multi-user computer capable of supporting many hundreds or thousands of users simultaneously. Used by large organisations for bulk data processing (e.g. banks, airlines).<br><br>
-<strong>4. Supercomputer:</strong> An extremely fast computer that can perform hundreds of millions (or billions) of instructions per second. Used for complex scientific simulations, weather forecasting, and cryptography. Most powerful of all classes.`},
+{id:102,topic:1,diff:"easy",marks:6,
+ q:"Name and briefly describe the four main types of computers by size. For each, give one distinguishing feature.",
+ hint:"Think from smallest to largest: PC → Mini → Mainframe → Supercomputer",
+ answer:`<strong>1. Personal Computer (PC):</strong> Designed for a single user. Small and affordable. Example use: home/office work.<br><br>
+<strong>2. Minicomputer:</strong> Can support multiple users (10–100s) at the same time. More powerful than a PC.<br><br>
+<strong>3. Mainframe:</strong> Very powerful, supports thousands of users simultaneously. Used by banks and airlines for large-scale data processing.<br><br>
+<strong>4. Supercomputer:</strong> The fastest and most powerful type of computer. Used for scientific simulations and weather forecasting.`},
 
-{id:103,topic:1,diff:"hard",marks:10,
- q:"Explain Flynn's Taxonomy for classifying computer architectures. Describe all four classes (SISD, SIMD, MISD, MIMD) with examples of each.",
- hint:"Think about how many instruction streams and data streams are active simultaneously.",
- answer:`Flynn's Taxonomy classifies computer systems based on the number of concurrent instruction streams and data streams:<br><br>
-<strong>1. SISD (Single Instruction, Single Data):</strong> One instruction stream, one data stream. Instructions execute sequentially (though stages may overlap in a pipeline). Traditional Von Neumann architecture. Example: classic single-core CPU.<br><br>
-<strong>2. SIMD (Single Instruction, Multiple Data):</strong> All processing units execute the SAME instruction simultaneously, each on a DIFFERENT data element. Example: GPU cores, vector processors used for image processing.<br><br>
-<strong>3. MISD (Multiple Instruction, Single Data):</strong> A single data stream is fed into multiple processing units, each performing different instructions. Output of one processor is input to the next (macro-pipe). Example: systolic arrays, some fault-tolerant systems.<br><br>
-<strong>4. MIMD (Multiple Instruction, Multiple Data):</strong> Every processor may execute a different instruction stream and work with a different data stream. Execution can be synchronous or asynchronous. Example: modern multi-core CPUs, distributed computing clusters.<br><br>
-Note: Von Neumann architecture is SISD; most modern parallel systems are MIMD.`},
+{id:103,topic:1,diff:"medium",marks:8,
+ q:"What is Flynn's Taxonomy? Briefly describe any two of its four classes (SISD, SIMD, MISD, MIMD) and give one example for each class you describe.",
+ hint:"Each class is defined by the number of instruction streams and data streams running at once.",
+ answer:`Flynn's Taxonomy classifies computers by the number of instruction streams and data streams active at one time.<br><br>
+<strong>SISD (Single Instruction, Single Data):</strong> One instruction runs on one piece of data at a time. The traditional, sequential computer. Example: a basic single-core CPU.<br><br>
+<strong>SIMD (Single Instruction, Multiple Data):</strong> The same instruction is applied to many pieces of data at the same time. Example: GPU processing where hundreds of cores apply the same operation to different pixels.<br><br>
+<strong>MIMD (Multiple Instruction, Multiple Data):</strong> Each processor runs different instructions on different data. Example: a modern multi-core CPU where each core independently executes a different program thread.<br><br>
+<em>(MISD: Multiple instructions on the same data — rarely used in practice, sometimes seen in fault-tolerant systems.)</em>`},
 
 // ---- TOPIC 2: NUMBER SYSTEMS ----
-{id:104,topic:2,diff:"hard",marks:12,
- q:"Explain the Radix Divide Technique and the Radix Multiply Technique for number base conversion. Using both methods, convert the decimal number 25.625 to binary. Show all steps clearly.",
- hint:"Handle the integer part (25) and fractional part (.625) separately.",
- answer:`<strong>Radix Divide Technique (for integers):</strong> Divide the integer successively by the target base, note the remainder at each step, stop when quotient = 0. Collect remainders from last to first.<br><br>
+{id:104,topic:2,diff:"medium",marks:8,
+ q:"Explain the Radix Divide method for converting an integer from decimal to binary. Use this method to convert the decimal number 25 to binary. Show each step.",
+ hint:"Divide by 2 repeatedly. Collect remainders from bottom to top.",
+ answer:`<strong>Radix Divide Method:</strong> Divide the number by the target base (2 for binary) repeatedly. Write down the remainder at each step. Stop when the quotient reaches 0. Read the remainders from last to first — that is your answer.<br><br>
 <strong>Converting 25 to binary:</strong><br>
-25 ÷ 2 = 12 R <strong>1</strong><br>
-12 ÷ 2 = 6 R <strong>0</strong><br>
-6 ÷ 2 = 3 R <strong>0</strong><br>
-3 ÷ 2 = 1 R <strong>1</strong><br>
-1 ÷ 2 = 0 R <strong>1</strong><br>
-Reading remainders last to first: <strong>11001₂</strong><br>
-Verify: 16+8+1 = 25 ✓<br><br>
-<strong>Radix Multiply Technique (for fractions):</strong> Successively multiply the fraction by the target base; collect the integer part at each step from first to last. Stop when fraction = 0 or recurs.<br><br>
-<strong>Converting 0.625 to binary:</strong><br>
-0.625 × 2 = <strong>1</strong>.25 → bit: 1<br>
-0.25 × 2 = <strong>0</strong>.5 → bit: 0<br>
-0.5 × 2 = <strong>1</strong>.0 → bit: 1 (stop)<br>
-Fraction part: <strong>0.101₂</strong><br><br>
-<strong>Final answer: 25.625₁₀ = 11001.101₂</strong>`},
+25 ÷ 2 = 12 remainder <strong>1</strong><br>
+12 ÷ 2 = 6 remainder <strong>0</strong><br>
+6 ÷ 2 = 3 remainder <strong>0</strong><br>
+3 ÷ 2 = 1 remainder <strong>1</strong><br>
+1 ÷ 2 = 0 remainder <strong>1</strong><br><br>
+Reading remainders from bottom to top: <strong>11001₂</strong><br>
+Check: 16 + 8 + 1 = 25 ✓`},
 
-{id:105,topic:2,diff:"hard",marks:10,
- q:"Compare and contrast the Sign-Magnitude, 1's Complement, and 2's Complement representations of binary numbers. For an n-bit field (1 sign bit + n-1 magnitude bits), state the range of representable integers for each system, and identify the key practical advantage of 2's complement.",
- hint:"Consider: zeros representation, arithmetic simplicity, and the representable range.",
- answer:`<strong>Sign-Magnitude:</strong> MSB = sign (0=positive, 1=negative); remaining bits = magnitude. Range: -(2^(n-1) - 1) to +(2^(n-1) - 1). Problem: two representations of zero (+0 and -0). Arithmetic is complicated because sign and magnitude must be handled separately.<br><br>
-<strong>1's Complement:</strong> Negate by inverting all bits. Range: same as sign-magnitude: -(2^(n-1) - 1) to +(2^(n-1) - 1). Also has two zeros (+0 and -0), requiring end-around-carry in addition. Slightly simpler arithmetic than sign-magnitude.<br><br>
-<strong>2's Complement:</strong> Negate by inverting all bits then adding 1. Range: -2^(n-1) to +(2^(n-1) - 1). For 8 bits: -128 to +127. <strong>Key advantages:</strong> (1) Only ONE representation of zero — simplifies logic. (2) Subtraction is simply addition of the 2's complement negative — the same adder hardware handles both operations. (3) Wider range (one extra negative number). This is why 2's complement is universally used in modern computers.`},
+{id:105,topic:2,diff:"medium",marks:8,
+ q:"What are Sign-Magnitude and 2's Complement representations? State one problem with Sign-Magnitude and one advantage of 2's Complement.",
+ hint:"Think about how zero is represented in each system, and which system makes arithmetic easier.",
+ answer:`<strong>Sign-Magnitude:</strong> The leftmost bit (MSB) represents the sign (0 = positive, 1 = negative). The remaining bits represent the actual value. For example, +5 = 0101 and -5 = 1101 in 4-bit sign-magnitude.<br>
+<strong>Problem:</strong> There are two ways to represent zero (+0 = 0000 and -0 = 1000), which wastes a code and complicates arithmetic.<br><br>
+<strong>2's Complement:</strong> To negate a number, flip all bits then add 1. For example, +5 = 0101, so -5 = 1010 + 1 = 1011.<br>
+<strong>Advantage:</strong> Only one representation of zero, and the same addition hardware can handle both addition and subtraction — making it much simpler to implement in circuits. This is why all modern computers use 2's complement.`},
 
-{id:106,topic:2,diff:"medium",marks:8,
- q:"What is a number system? Explain the concepts of radix and positional notation. Give the general polynomial representation of a number and explain how it is used to convert from any base to decimal.",
- hint:"Use the general formula: N = Σ dᵢ × rⁱ",
- answer:`A <strong>number system</strong> uses a specific radix (base) to represent quantities using a finite set of digits. The digits range from 0 through r-1, where r is the radix.<br><br>
-<strong>Radix</strong> (base): the total number of unique digits in the system. E.g. binary r=2 (digits: 0,1); decimal r=10 (digits: 0–9); hex r=16 (digits: 0–9, A–F).<br><br>
-<strong>Positional Notation:</strong> The value of each digit depends on its position. A digit at position i (counting from 0 at the right) has weight rⁱ.<br><br>
-<strong>General polynomial representation:</strong><br>
-N = dₙ·rⁿ + dₙ₋₁·rⁿ⁻¹ + ... + d₁·r¹ + d₀·r⁰ + d₋₁·r⁻¹ + ...<br><br>
-<strong>Converting to decimal:</strong> Simply expand this polynomial using decimal arithmetic. Example: 1011.01₂ = 1×2³ + 0×2² + 1×2¹ + 1×2⁰ + 0×2⁻¹ + 1×2⁻² = 8 + 0 + 2 + 1 + 0 + 0.25 = 11.25₁₀`},
+{id:106,topic:2,diff:"easy",marks:5,
+ q:"What is a number system? Define the term 'radix' (base) and give the radix for binary, decimal, and hexadecimal. Show how to convert the binary number 1011₂ to decimal using positional notation.",
+ hint:"Each digit's value = digit × (base raised to its position number).",
+ answer:`A <strong>number system</strong> is a set of symbols and rules used to represent quantities. The <strong>radix</strong> (or base) is the number of unique digits available in the system.<br><br>
+<strong>Radix values:</strong> Binary = 2, Decimal = 10, Hexadecimal = 16.<br><br>
+<strong>Converting 1011₂ to decimal using positional notation:</strong><br>
+Each digit is multiplied by 2 raised to its position (starting at 0 on the right):<br>
+1×2³ + 0×2² + 1×2¹ + 1×2⁰<br>
+= 8 + 0 + 2 + 1<br>
+= <strong>11₁₀</strong>`},
 
 // ---- TOPIC 3: INSTRUCTION SET ----
-{id:107,topic:3,diff:"hard",marks:12,
- q:"With reference to the ASC (A Simple Computer), describe the complete memory READ and WRITE operations. Explain the role of the MAR and MBR in each operation, and state which operation alters memory content and which does not.",
- hint:"Consider the sequence of register operations for each: what goes into MAR, what happens to MBR, and what signal is set?",
- answer:`The <strong>Memory Address Register (MAR)</strong> holds the address of the memory word to be accessed. The <strong>Memory Buffer Register (MBR)</strong> holds the data being transferred to or from memory.<br><br>
-<strong>READ Operation:</strong><br>
-1. The address of the word to be read is placed in the MAR.<br>
-2. The read signal is set to 1.<br>
-3. Memory logic brings a COPY of the contents of the addressed word into the MBR.<br>
-4. <strong>The memory word is NOT altered</strong> — a read is non-destructive.<br>
-Notation: MBR ← M[MAR]<br><br>
-<strong>WRITE Operation:</strong><br>
-1. The data to be written is placed in the MBR by external logic.<br>
-2. The address of the target location is placed in the MAR.<br>
-3. The write signal is set to 1.<br>
-4. Memory logic transfers the MBR content into the addressed memory location.<br>
-5. <strong>The memory word IS altered</strong> — the previous content is destroyed.<br>
-Notation: M[MAR] ← MBR<br><br>
-<strong>Key distinction:</strong> READ is non-destructive (memory unchanged); WRITE is destructive (old value is overwritten).`},
+{id:107,topic:3,diff:"easy",marks:6,
+ q:"What are the MAR and MBR registers used for in memory operations? Describe what happens during a memory READ operation in simple steps.",
+ hint:"MAR holds the address. MBR holds the data. Which one changes during a read?",
+ answer:`The <strong>MAR (Memory Address Register)</strong> holds the address of the memory location to be accessed.<br>
+The <strong>MBR (Memory Buffer Register)</strong> holds the data being read from or written to memory.<br><br>
+<strong>Memory READ operation (3 steps):</strong><br>
+1. The address of the word to read is placed in the MAR.<br>
+2. The read signal is activated.<br>
+3. A copy of the data at that memory address is loaded into the MBR.<br><br>
+<strong>Key point:</strong> A READ does NOT change the original memory content — it is non-destructive. The notation for this is: MBR ← M[MAR].`},
 
-{id:108,topic:3,diff:"medium",marks:8,
- q:"What is meant by 'byte-addressable' memory? Using a 16-bit address as an example, calculate the total number of addressable locations. Also explain the difference between a memory word and a byte in this context.",
- hint:"2^n gives the number of addressable locations for an n-bit address.",
- answer:`<strong>Byte-addressable memory:</strong> A memory organisation where every individual byte (8 bits) has its own unique address. This is the most common scheme in modern computers.<br><br>
-<strong>Calculation for 16-bit address:</strong><br>
-Number of addressable locations = 2^16 = 2^6 × 2^10 = 64 × 1024 = <strong>64K locations</strong><br>
-Since each location holds 1 byte, total memory = 64KB.<br><br>
-<strong>Memory Word vs. Byte:</strong><br>
-A <strong>byte</strong> is 8 bits — the basic addressable unit. A <strong>memory word</strong> is the most often accessed unit of data, typically larger than a byte. Common word sizes include 16, 32, or 64 bits. In a byte-addressable system, a word consists of 2, 4, or 8 consecutive bytes respectively. You can also address half-words, double-words, etc., depending on the architecture.`},
+{id:108,topic:3,diff:"easy",marks:5,
+ q:"What does 'byte-addressable memory' mean? If a computer uses a 16-bit address, how many memory locations can it address? Show your working.",
+ hint:"Use the formula: number of locations = 2^(number of address bits).",
+ answer:`<strong>Byte-addressable memory</strong> means each individual byte (8 bits) has its own unique address. This is the standard in modern computers.<br><br>
+<strong>For a 16-bit address:</strong><br>
+Number of locations = 2^16 = 64 × 1024 = <strong>64K locations</strong><br>
+Since each location stores 1 byte, the total addressable memory = 64KB.<br><br>
+<strong>Note:</strong> A byte is 8 bits. A memory word is a larger unit (e.g. 16, 32, or 64 bits) made up of multiple consecutive bytes.`},
 
-{id:109,topic:3,diff:"hard",marks:10,
- q:"Explain the concept of Instruction Set Architecture (ISA). What attributes does it define? Distinguish between RISC and CISC ISA design philosophies.",
- hint:"ISA is the contract between software and hardware. RISC = simple, CISC = complex instructions.",
- answer:`<strong>Instruction Set Architecture (ISA)</strong> is the interface between the computer's hardware and software. It defines all attributes visible to the programmer:<br>
-• The set of instructions (opcodes) the processor can execute<br>
-• Data types and their sizes (integer, floating-point, etc.)<br>
-• Memory addressing modes (direct, indirect, indexed, immediate)<br>
-• Register count and types<br>
-• I/O model<br>
-• Interrupt handling mechanism<br><br>
-<strong>RISC (Reduced Instruction Set Computer):</strong><br>
-• Small, simple instruction set — each instruction executes in one clock cycle<br>
-• Load/Store architecture — only load/store instructions access memory<br>
-• Many general-purpose registers<br>
-• Relies on compiler optimisation<br>
-• Examples: ARM, MIPS, RISC-V<br><br>
-<strong>CISC (Complex Instruction Set Computer):</strong><br>
-• Large instruction set with complex, multi-cycle instructions<br>
-• Instructions can directly operate on memory<br>
-• Fewer registers<br>
-• Hardware implements complex operations<br>
-• Examples: x86 (Intel/AMD)<br><br>
-<strong>Key trade-off:</strong> RISC = simpler hardware, faster pipeline; CISC = fewer instructions needed in a program but more complex hardware.`},
+{id:109,topic:3,diff:"medium",marks:7,
+ q:"What is an Instruction Set Architecture (ISA)? State two things it defines. What is the main difference between RISC and CISC designs?",
+ hint:"ISA is the interface between hardware and software. RISC = simple instructions, CISC = complex ones.",
+ answer:`An <strong>Instruction Set Architecture (ISA)</strong> is the set of rules and definitions that forms the interface between hardware and software. It tells programmers what the CPU can do.<br><br>
+<strong>Two things it defines:</strong><br>
+1. The set of instructions (operations) the CPU can carry out (e.g. ADD, LOAD, BRANCH).<br>
+2. Memory addressing modes — how operands are located (e.g. direct, indirect, immediate).<br><br>
+<strong>RISC vs CISC:</strong><br>
+• <strong>RISC (Reduced Instruction Set Computer):</strong> Uses a small set of simple instructions, each completing in one clock cycle. Fast pipeline. Examples: ARM, MIPS.<br>
+• <strong>CISC (Complex Instruction Set Computer):</strong> Has many complex instructions that can do more work per instruction but take multiple cycles. Example: x86 (Intel/AMD).<br>
+<strong>Key trade-off:</strong> RISC = simpler hardware but more instructions per program; CISC = fewer instructions but more complex hardware.`},
 
 // ---- TOPIC 4: PROCESSING UNIT ----
-{id:110,topic:4,diff:"hard",marks:12,
- q:"Describe the complete CPU execution cycle (instruction cycle). List each step in order, explain what hardware components are involved at each step, and explain how interrupts fit into this cycle.",
- hint:"Steps: Fetch → Decode → Fetch Operands → Execute → Store → Interrupt Check",
- answer:`The <strong>CPU Execution Cycle</strong> (also called the Fetch-Decode-Execute cycle) is repeated for every instruction:<br><br>
-<strong>Step 1 — Instruction Fetch:</strong> The address in the PC is sent to the MAR. The instruction at that memory address is fetched into the MBR, then loaded into the IR. The PC is incremented to point to the next instruction.<br><br>
-<strong>Step 2 — Instruction Decode:</strong> The control unit decodes the opcode in the IR, determining what operation is required and what operands are needed.<br><br>
-<strong>Step 3 — Fetch Operands:</strong> If the instruction needs data from memory, the operand addresses are calculated and the operands are fetched into CPU registers.<br><br>
-<strong>Step 4 — Execute:</strong> The ALU or appropriate functional unit performs the operation specified by the instruction.<br><br>
-<strong>Step 5 — Store Results:</strong> If needed, results are written from CPU registers back to memory.<br><br>
-<strong>Step 6 — Interrupt Check:</strong> Before fetching the next instruction, the CPU checks for pending interrupts. If an interrupt is detected, the current program state is saved and an Interrupt Service Routine (ISR) is invoked. After the ISR completes, the saved state is restored and the cycle continues.<br><br>
-This cycle repeats indefinitely as long as there are instructions to execute.`},
+{id:110,topic:4,diff:"medium",marks:8,
+ q:"List and briefly describe the main steps of the CPU instruction cycle (Fetch-Decode-Execute). What happens at the end of the cycle before the next instruction is fetched?",
+ hint:"Think: Fetch → Decode → Execute → Store. What check happens at the very end?",
+ answer:`The <strong>CPU Instruction Cycle</strong> is the sequence of steps the CPU repeats for every instruction:<br><br>
+<strong>1. Fetch:</strong> The CPU reads the next instruction from memory. The address stored in the Program Counter (PC) is used to locate it, and the PC is then updated to point to the next instruction.<br><br>
+<strong>2. Decode:</strong> The Control Unit interprets the instruction opcode to determine what operation is needed and what data is required.<br><br>
+<strong>3. Fetch Operands:</strong> If the instruction needs data from memory, that data is fetched.<br><br>
+<strong>4. Execute:</strong> The ALU or relevant unit carries out the operation.<br><br>
+<strong>5. Store Result:</strong> The result is written back to a register or memory if needed.<br><br>
+<strong>6. Interrupt Check:</strong> Before starting the next instruction, the CPU checks if any interrupt has occurred. If so, the current state is saved and the Interrupt Service Routine (ISR) runs. Afterwards, the CPU resumes normal execution.`},
 
-{id:111,topic:4,diff:"medium",marks:8,
- q:"Explain the difference between General-Purpose Registers and Special-Purpose Registers in a CPU. Give three examples of special-purpose registers and describe the function of each.",
- hint:"Think about PC, SP, IR, MAR, MDR, index registers...",
- answer:`<strong>General-Purpose Registers (GPRs):</strong> Can be assigned to a variety of functions by the programmer. Used to hold operands, intermediate results, and addresses. The number of GPRs affects instruction set design — more GPRs = fewer memory accesses needed.<br><br>
-<strong>Special-Purpose Registers:</strong> Restricted to specific, fixed functions. Not directly accessible to the programmer in most architectures.<br><br>
-<strong>Three examples:</strong><br>
-1. <strong>Program Counter (PC):</strong> Contains the address of the next instruction to be fetched. It is automatically incremented after each fetch and modified by branch/jump instructions.<br><br>
-2. <strong>Stack Pointer (SP):</strong> Points to the current top of the stack in memory. Automatically decremented on PUSH and incremented on POP operations. Used for function calls and interrupt handling.<br><br>
-3. <strong>Instruction Register (IR):</strong> Holds the instruction currently being decoded and executed. Its content determines the control signals issued by the control unit.<br><br>
-Other examples include: MAR (Memory Address Register), MDR/MBR (Memory Data/Buffer Register), PSW (Program Status Word), Index Register.`},
+{id:111,topic:4,diff:"easy",marks:6,
+ q:"What is the difference between a General-Purpose Register and a Special-Purpose Register? Give two examples of special-purpose registers and state what each one does.",
+ hint:"PC, SP, and IR are common special-purpose registers.",
+ answer:`<strong>General-Purpose Registers (GPRs):</strong> Can be used by the programmer for any purpose — storing data, addresses, or intermediate results. Having more GPRs reduces the need to access slow memory.<br><br>
+<strong>Special-Purpose Registers:</strong> Reserved for specific, fixed hardware functions. Usually not directly accessible to the programmer.<br><br>
+<strong>Two examples:</strong><br>
+1. <strong>Program Counter (PC):</strong> Always holds the address of the next instruction to be fetched. It automatically increments after each fetch and changes when a branch or jump occurs.<br><br>
+2. <strong>Instruction Register (IR):</strong> Holds the instruction currently being decoded and executed. The control unit reads the IR to determine what operation to perform.`},
 
-{id:112,topic:4,diff:"hard",marks:10,
- q:"Compare Hardwired Control and Microprogrammed Control for the CPU control unit. What are the advantages and disadvantages of each? Under what circumstances would you prefer one over the other?",
- hint:"Hardwired = speed; Microprogrammed = flexibility",
- answer:`The <strong>Control Unit</strong> generates micro-orders (individual control signals) that direct the operation of the datapath. It can be implemented in two ways:<br><br>
-<strong>Hardwired Control:</strong><br>
-• The control logic is implemented directly as combinational and sequential logic circuits<br>
-• Control signals are generated by fixed hardware based on the instruction opcode and current state<br>
-• <strong>Advantages:</strong> Very fast — no memory lookup required; optimised for speed<br>
-• <strong>Disadvantages:</strong> Inflexible — changes to the instruction set require redesigning the hardware; complex to design and debug for large instruction sets<br>
-• Best for: RISC architectures with simple, fixed instruction sets<br><br>
-<strong>Microprogrammed Control:</strong><br>
-• The control logic is implemented using a Control Memory (ROM-like store) containing microinstructions<br>
-• Each machine instruction is implemented as a sequence of microinstructions (a microprogram)<br>
-• <strong>Advantages:</strong> Flexible — new instructions can be added by modifying the microprogram; easier to design and debug complex instruction sets<br>
-• <strong>Disadvantages:</strong> Slower than hardwired (requires memory access per microinstruction); more complex hardware<br>
-• Best for: CISC architectures with large, complex instruction sets<br><br>
-<strong>Preference:</strong> Modern high-performance CPUs often use hardwired control with RISC-like internal operations; CISC processors (e.g. x86) may use microcode internally to translate complex instructions.`},
+{id:112,topic:4,diff:"medium",marks:7,
+ q:"Compare Hardwired Control and Microprogrammed Control for the CPU's control unit. Give one advantage and one disadvantage of each.",
+ hint:"Hardwired = fast but inflexible. Microprogrammed = flexible but slower.",
+ answer:`The <strong>Control Unit</strong> generates signals that direct the CPU's operations. It can be built in two ways:<br><br>
+<strong>Hardwired Control:</strong> The control logic is built directly from logic gates and circuits.<br>
+✅ <strong>Advantage:</strong> Very fast — signals are generated directly by hardware with no memory access.<br>
+❌ <strong>Disadvantage:</strong> Hard to modify — changing the instruction set requires redesigning the hardware.<br>
+Best suited for: RISC processors with simple instruction sets.<br><br>
+<strong>Microprogrammed Control:</strong> Instructions are implemented as small programs (microprograms) stored in a control memory (ROM).<br>
+✅ <strong>Advantage:</strong> Flexible — new instructions can be added by updating the microprogram, no hardware changes needed.<br>
+❌ <strong>Disadvantage:</strong> Slower — requires a memory lookup for each micro-operation.<br>
+Best suited for: CISC processors with large, complex instruction sets.`},
 
 // ---- TOPIC 5: MEMORY I (CACHE) ----
-{id:113,topic:5,diff:"hard",marks:12,
- q:"Explain the concept of the Memory Hierarchy. Describe each level from fastest to slowest, state the key parameters used to characterise each level, and explain why the hierarchy is structured this way (the speed-cost trade-off).",
- hint:"Registers → Cache → Main Memory → Disk → Tape. Think about speed, cost, capacity.",
- answer:`The <strong>Memory Hierarchy</strong> organises storage in levels from fastest/smallest/most expensive to slowest/largest/cheapest:<br><br>
-<strong>Level 1 — CPU Registers:</strong> Fastest storage, built into the CPU. Holds operands for current operations. Capacity: typically 8–64 registers. Very expensive per bit.<br><br>
-<strong>Level 2 — Cache Memory (L1/L2/L3):</strong> Small, very fast SRAM. Bridges the speed gap between CPU and main memory. Exploits temporal and spatial locality. Capacity: KB to MB.<br><br>
-<strong>Level 3 — Main Memory (RAM):</strong> Typically DRAM. Larger but slower than cache. Holds the active programs and data. Capacity: GB. Less expensive than cache.<br><br>
-<strong>Level 4 — Secondary Storage (Hard Disk/SSD):</strong> Magnetic or flash storage. Non-volatile. Very large but much slower. Capacity: TB. Cheap per bit.<br><br>
-<strong>Level 5 — Tertiary Storage (Tape):</strong> Magnetic tape. Used for archival backup. Massive capacity, extremely slow sequential access.<br><br>
-<strong>Key characterisation parameters:</strong> Access type, capacity (bytes), cycle time, latency, bandwidth, and cost (per megabyte).<br><br>
-<strong>Speed-Cost Trade-off:</strong> Fast memory (SRAM/registers) is very expensive — building the entire memory from it would be prohibitively costly. Slow memory (disk) is very cheap but too slow for the CPU. The hierarchy balances performance and cost: frequently used data is kept in fast, expensive memory; rarely used data stays in slow, cheap storage. This works because of the <strong>Principle of Locality of Reference</strong>.`},
+{id:113,topic:5,diff:"easy",marks:6,
+ q:"What is the Memory Hierarchy? List the five main levels from fastest to slowest and briefly explain why this hierarchy exists.",
+ hint:"Registers → Cache → RAM → Hard Disk → Tape. Think about the speed vs cost trade-off.",
+ answer:`The <strong>Memory Hierarchy</strong> organises storage into levels, ranging from fastest/most expensive to slowest/cheapest:<br><br>
+1. <strong>CPU Registers</strong> — Fastest, built inside the CPU. Very small capacity (e.g. 32 registers).<br>
+2. <strong>Cache Memory (L1/L2/L3)</strong> — Very fast SRAM sitting between the CPU and RAM. Small but much faster than RAM.<br>
+3. <strong>Main Memory (RAM)</strong> — Larger, slower, and cheaper than cache. Holds active programs and data.<br>
+4. <strong>Secondary Storage (Hard Disk/SSD)</strong> — Large, non-volatile, and much slower. Stores files and programs not currently in use.<br>
+5. <strong>Tertiary Storage (Tape)</strong> — Massive capacity, very slow. Used for backup and archiving.<br><br>
+<strong>Why it exists:</strong> Fast memory (SRAM) is very expensive — you can't build the whole system from it. Slow memory (disk) is cheap but too slow on its own. The hierarchy gives a good balance of speed and cost by keeping the most-used data in the fastest levels.`},
 
-{id:114,topic:5,diff:"hard",marks:10,
- q:"Explain the Principle of Locality of Reference. Distinguish between Temporal Locality and Spatial Locality, and explain how each type justifies aspects of cache memory design.",
- hint:"Temporal = same location accessed again. Spatial = nearby locations accessed next.",
- answer:`The <strong>Principle of Locality of Reference</strong> states that within a given period of time, programs tend to reference a relatively confined area of memory repeatedly. This is the fundamental principle that makes cache memory effective.<br><br>
-<strong>Temporal Locality:</strong> "Once a particular memory item has been referenced, it is most likely that it will be referenced again soon." Example: variables in a loop body are accessed repeatedly during each iteration.<br>
-→ <strong>Justifies keeping recently used data in cache.</strong> On a cache hit, the item is already present and is accessed again quickly. The average access time formula shows: as n (number of repeated accesses) increases, average access time → cache access time tₓ.<br><br>
-<strong>Spatial Locality:</strong> "When a given address has been referenced, it is most likely that addresses near it will be referenced within a short period." Example: consecutive instructions in a straight-line program; sequential array elements.<br>
-→ <strong>Justifies transferring entire blocks (cache lines) on a cache miss.</strong> When a miss occurs, a block of m consecutive words is loaded into cache. Due to spatial locality, all m words will likely be needed soon, reducing future misses. As block size m increases, average access time decreases.<br><br>
-<strong>Combined effect:</strong> The combination of temporal and spatial locality means the hit ratio stays very high in practice, making the memory hierarchy highly effective despite the large speed gap between cache and main memory.`},
+{id:114,topic:5,diff:"medium",marks:7,
+ q:"What is the Principle of Locality of Reference? Distinguish between Temporal Locality and Spatial Locality with one example each. Why is this principle important for cache memory?",
+ hint:"Temporal = same data used again soon. Spatial = nearby data used soon.",
+ answer:`The <strong>Principle of Locality of Reference</strong> states that programs tend to access a small portion of memory repeatedly within any short period of time. This is what makes cache memory effective.<br><br>
+<strong>Temporal Locality:</strong> A recently accessed memory location is likely to be accessed again soon.<br>
+Example: A variable used inside a loop is accessed many times in a short period.<br>
+→ Justifies keeping recently used data in cache.<br><br>
+<strong>Spatial Locality:</strong> If a memory location is accessed, nearby locations are likely to be accessed soon too.<br>
+Example: Reading elements of an array one by one — each element is stored next to the others.<br>
+→ Justifies loading an entire block (cache line) into cache when a miss occurs, not just the one requested byte.<br><br>
+<strong>Importance:</strong> Because of locality, the cache hit rate stays high in practice, meaning most memory accesses are served quickly from cache rather than slow main memory.`},
 
-{id:115,topic:5,diff:"medium",marks:8,
- q:"Compare the four types of memory classified by their access mechanism: RAM (RWM & ROM), CAM, SAM, and DAM. For each, state where it is typically used in a computer system.",
- hint:"Think: which ones are primary memory, which are secondary? Which need sequential access?",
- answer:`<strong>1. Random-Access Memory (RAM):</strong> Any memory location can be accessed in the same fixed time regardless of location or access sequence.<br>
-• <strong>RWM (Read/Write Memory):</strong> Can be read from and written to during normal operation. Used as main memory and cache.<br>
-• <strong>ROM (Read-Only Memory):</strong> Data can only be READ during normal operation. Written by manufacturer or user offline. Used for firmware, BIOS/UEFI, embedded systems.<br><br>
-<strong>2. Content-Addressable Memory (CAM) / Associative Memory:</strong> Data is accessed by content (value), not by address. A search key is compared simultaneously against all stored entries. Used in: cache tag arrays, TLBs (Translation Lookaside Buffers), network routing tables.<br><br>
-<strong>3. Sequential-Access Memory (SAM):</strong> Data must be accessed in sequence — you must pass through earlier locations to reach later ones. Access time depends on location. Used as: magnetic tape drives (archival/backup storage).<br><br>
-<strong>4. Direct-Access Memory (DAM):</strong> Direct access to a general region, then sequential access within that region. Between random and sequential. Used as: magnetic hard disk drives — the head moves directly to the right track, then waits for the right sector to rotate underneath.`},
+{id:115,topic:5,diff:"easy",marks:6,
+ q:"Compare RAM and ROM. State one key difference and give one typical use for each.",
+ hint:"Can you write to both during normal operation?",
+ answer:`<strong>RAM (Read/Write Memory):</strong> Can be both read from and written to during normal operation. It is volatile — data is lost when power is turned off.<br>
+Typical use: Main memory — holds the operating system and active programs while the computer is running.<br><br>
+<strong>ROM (Read-Only Memory):</strong> Can only be READ during normal operation. Data is pre-written and does not change. It is non-volatile — data is retained when power is off.<br>
+Typical use: Firmware/BIOS — stores the startup instructions that run when you turn on a computer.<br><br>
+<strong>Key difference:</strong> RAM can be written to freely at runtime; ROM cannot be changed during normal use.`},
+
 
 // ---- TOPIC 6: MEMORY II ----
-{id:116,topic:6,diff:"hard",marks:12,
- q:"Explain Virtual Memory in detail. What problem does it solve? Describe how address translation works using Direct Mapping and Associative Mapping. State one advantage and one disadvantage of each.",
- hint:"Virtual memory extends apparent RAM using disk. Focus on page tables and how the MMU translates addresses.",
- answer:`<strong>Problem Solved:</strong> Physical main memory is limited and may not be large enough to hold all active programs simultaneously. Virtual memory allows programs to use more memory than is physically available by storing inactive portions on the hard disk.<br><br>
-<strong>How it works:</strong> Programs use virtual (logical) addresses. The Memory Management Unit (MMU) translates these to physical addresses. Data moves between disk and RAM in fixed-size units called <strong>pages</strong> (typically 2K–16K bytes). A <strong>page fault</strong> occurs when the required page is not in RAM — the OS must load it from disk.<br><br>
-<strong>1. Direct Mapping:</strong><br>
-• The virtual address is split into a virtual page number and an offset.<br>
-• The virtual page number directly indexes into the page table to find the physical page number.<br>
-• The physical address = physical page number + offset.<br>
-• <strong>Advantage:</strong> Simple — direct address calculation, fast lookup.<br>
-• <strong>Disadvantage:</strong> Very large page table required (one entry per possible virtual page).<br><br>
-<strong>2. Associative Mapping:</strong><br>
-• The page table is shorter; each entry stores both virtual and physical page numbers.<br>
-• A parallel associative search compares the virtual page number against ALL entries simultaneously.<br>
-• If a match is found, the physical page number is extracted and concatenated with the offset.<br>
-• <strong>Advantage:</strong> Much smaller page table; fast search (parallel).<br>
-• <strong>Disadvantage:</strong> Requires expensive Content-Addressable Memory (CAM) hardware.<br><br>
-Note: Set-Associative Mapping combines both: the virtual page number selects a set, and associative search occurs within that set — balancing speed and hardware cost.`},
+{id:116,topic:6,diff:"medium",marks:7,
+ q:"What is Virtual Memory? What problem does it solve? Briefly explain how the MMU translates a virtual address to a physical address using a page table.",
+ hint:"Virtual memory lets programs use more space than physically available. Pages move between disk and RAM.",
+ answer:`<strong>What is Virtual Memory?</strong><br>
+Virtual memory allows a program to use more memory than is physically installed in the computer. Inactive portions of a program are stored on the hard disk and loaded into RAM only when needed.<br><br>
+<strong>Problem it solves:</strong> Physical RAM is limited. Virtual memory lets large programs or many programs run simultaneously without needing all their data in RAM at once.<br><br>
+<strong>How address translation works:</strong><br>
+Programs use <em>virtual (logical) addresses</em>. The <strong>MMU (Memory Management Unit)</strong> translates these to real <em>physical addresses</em> using a <strong>page table</strong>:<br>
+1. The virtual address is split into a <strong>virtual page number</strong> and an <strong>offset</strong>.<br>
+2. The virtual page number is used to look up the corresponding <strong>physical page number</strong> in the page table.<br>
+3. The physical address = physical page number + offset.<br><br>
+If the required page is not currently in RAM, a <strong>page fault</strong> occurs and the OS loads it from disk.`},
 
-{id:117,topic:6,diff:"medium",marks:8,
- q:"Distinguish between Static RAM (SRAM) and Dynamic RAM (DRAM). Compare them in terms of: cell construction, need for refreshing, speed, cost, and typical applications.",
- hint:"SRAM = 6 transistors per bit. DRAM = 1 transistor + 1 capacitor per bit.",
- answer:`<table style="width:100%;border-collapse:collapse;font-size:13px;color:#cbd5e1">
-<tr style="color:#00e5ff;font-family:monospace;font-size:11px"><td style="padding:6px 8px;border:1px solid #252836">Parameter</td><td style="padding:6px 8px;border:1px solid #252836">SRAM</td><td style="padding:6px 8px;border:1px solid #252836">DRAM</td></tr>
-<tr><td style="padding:6px 8px;border:1px solid #252836">Cell Construction</td><td style="padding:6px 8px;border:1px solid #252836">6 transistors (flip-flop)</td><td style="padding:6px 8px;border:1px solid #252836">1 transistor + 1 capacitor</td></tr>
-<tr><td style="padding:6px 8px;border:1px solid #252836">Refresh Needed?</td><td style="padding:6px 8px;border:1px solid #252836">NO — retains data as long as powered</td><td style="padding:6px 8px;border:1px solid #252836">YES — capacitor charge leaks; must refresh every ~ms</td></tr>
-<tr><td style="padding:6px 8px;border:1px solid #252836">Speed</td><td style="padding:6px 8px;border:1px solid #252836">Very fast</td><td style="padding:6px 8px;border:1px solid #252836">Slower than SRAM</td></tr>
-<tr><td style="padding:6px 8px;border:1px solid #252836">Cost per bit</td><td style="padding:6px 8px;border:1px solid #252836">Expensive</td><td style="padding:6px 8px;border:1px solid #252836">Cheap</td></tr>
-<tr><td style="padding:6px 8px;border:1px solid #252836">Cell Density</td><td style="padding:6px 8px;border:1px solid #252836">Low (large cell)</td><td style="padding:6px 8px;border:1px solid #252836">High (small cell)</td></tr>
-<tr><td style="padding:6px 8px;border:1px solid #252836">Typical Application</td><td style="padding:6px 8px;border:1px solid #252836">Cache memory, CPU registers</td><td style="padding:6px 8px;border:1px solid #252836">Main memory (RAM) in PCs</td></tr>
-</table><br>
-<strong>Summary:</strong> SRAM is faster and more reliable but expensive and less dense — ideal for cache. DRAM is slower and requires refresh circuitry but is cheap and high-density — ideal for large main memory.`},
 
-{id:118,topic:6,diff:"hard",marks:10,
- q:"Explain the internal organisation of main memory. How are cells, rows, columns, address decoders, word select lines, and data lines related? How does the choice of memory organisation (e.g. 4Kx1 vs 256x16) affect the number of address and data pins required?",
- hint:"Think about rows = words; columns = bits. Address decoder activates one row at a time.",
- answer:`<strong>Internal Main Memory Organisation:</strong><br>
-Main memory can be visualised as a 2D array of basic cells. Each cell stores one bit. Cells in the same row form a memory word. Cells in the same column share a data (bit) line.<br><br>
-<strong>Key components:</strong><br>
-• <strong>Address Decoder:</strong> Receives n address bits, activates exactly ONE of 2^n word select lines at a time.<br>
-• <strong>Word Select Lines (W₀...W_{2^n-1}):</strong> One per row — enables all cells in that row for read or write simultaneously.<br>
-• <strong>Data (Bit) Lines:</strong> One per column — used to input or output the contents of the selected cells.<br><br>
-<strong>Read:</strong> Decoder activates the row → cells output their values on data lines → data lines carry values to the data bus.<br>
-<strong>Write:</strong> Decoder activates the row → values on data lines are written into all cells in that row.<br><br>
-<strong>Organisation vs. Number of Pins:</strong><br>
-For a total of 4K bits stored:<br>
-• 4K×1: 12 address pins, 1 data pin<br>
-• 1K×4: 10 address pins, 4 data pins<br>
-• 512×8: 9 address pins, 8 data pins<br>
-• 256×16: 8 address pins, 16 data pins<br><br>
-<strong>Implication:</strong> Organisation affects the aspect ratio (rows vs. columns) of the chip array, which impacts chip area utilisation. A more square layout generally uses chip area more efficiently. This trade-off guides the choice of memory chip organisation by manufacturers.`},
+
+{id:118,topic:6,diff:"easy",marks:5,
+ q:"What is the difference between SRAM and DRAM? Give one typical use for each type.",
+ hint:"SRAM uses flip-flops (no refresh needed). DRAM uses capacitors (needs refresh).",
+ answer:`<strong>SRAM (Static RAM):</strong> Stores each bit using a flip-flop circuit (6 transistors per cell). Does NOT need to be refreshed — data stays as long as power is on. Very fast but expensive and less dense.<br>
+Typical use: <strong>Cache memory</strong> (L1/L2/L3 inside the CPU).<br><br>
+<strong>DRAM (Dynamic RAM):</strong> Stores each bit using a capacitor and one transistor. Must be <strong>periodically refreshed</strong> (every few milliseconds) because capacitors slowly leak their charge. Slower than SRAM but much cheaper and more compact.<br>
+Typical use: <strong>Main memory (RAM)</strong> in computers.`},
 
 // ---- TOPIC 7: I/O DESIGN ----
-{id:119,topic:7,diff:"hard",marks:12,
- q:"Explain the three modes of I/O transfer: Programmed I/O, Interrupt-Driven I/O, and Direct Memory Access (DMA). For each mode, describe how control is managed, and state the main advantage and disadvantage.",
- hint:"Key question for each: who controls the transfer and when?",
+{id:119,topic:7,diff:"medium",marks:8,
+ q:"Describe the three modes of I/O data transfer: Programmed I/O, Interrupt-Driven I/O, and DMA. For each, state who controls the transfer and give one advantage.",
+ hint:"Ask yourself: what is the CPU doing while data is being transferred in each method?",
  answer:`<strong>1. Programmed I/O (Polling):</strong><br>
-The CPU controls the entire transfer. The protocol is programmed as routines run under CPU control. The CPU continuously checks (polls) the status register of the I/O device to determine readiness before transferring data.<br>
-• <strong>Advantage:</strong> Simple to implement; no special hardware required.<br>
-• <strong>Disadvantage:</strong> Very slow — the CPU wastes cycles polling, and cannot do other work during the transfer (busy-waiting). Only suitable for one character at a time (e.g. keyboard).<br><br>
+The CPU controls everything. It repeatedly checks (polls) the I/O device to see if it is ready, then transfers one unit of data at a time.<br>
+✅ Advantage: Very simple — no extra hardware needed.<br>
+❌ Drawback: CPU is stuck waiting and cannot do other work.<br><br>
 <strong>2. Interrupt-Driven I/O:</strong><br>
-The CPU initiates the transfer, then continues with other work. When the I/O device is ready (or transfer is complete), it sends an interrupt signal to the CPU. The CPU suspends its current task, saves its state, and executes an Interrupt Service Routine (ISR) to handle the transfer, then restores its state.<br>
-• <strong>Advantage:</strong> CPU is free to do other work while waiting for I/O — much more efficient than polling.<br>
-• <strong>Disadvantage:</strong> Interrupt handling overhead (saving/restoring state) can be significant for high-speed, high-volume transfers.<br><br>
-<strong>3. Direct Memory Access (DMA):</strong><br>
-A dedicated DMA controller manages the transfer directly between the I/O device and main memory, without CPU involvement. The CPU only initialises the transfer (start address, byte count, direction) then is free to do other work. The DMA controller issues bus cycles to memory independently. When done, it interrupts the CPU.<br>
-• <strong>Advantage:</strong> Minimal CPU involvement — ideal for large, high-speed bulk data transfers (e.g. disk, network).<br>
-• <strong>Disadvantage:</strong> Requires dedicated DMA controller hardware; DMA and CPU may compete for bus access (bus contention).`},
+The CPU starts the transfer, then continues with other tasks. The I/O device sends an interrupt signal when it is ready. The CPU then pauses, handles the transfer, and resumes.<br>
+✅ Advantage: CPU can do other work while waiting — more efficient than polling.<br><br>
+<strong>3. DMA (Direct Memory Access):</strong><br>
+A dedicated DMA controller handles the transfer directly between the I/O device and main memory, with almost no CPU involvement. The CPU only sets up the transfer at the start.<br>
+✅ Advantage: Ideal for large, fast data transfers (e.g. loading a file from disk) — CPU is nearly free the whole time.`},
 
-{id:120,topic:7,diff:"medium",marks:8,
- q:"Compare Shared I/O (Isolated I/O) and Memory-Mapped I/O. For each, describe how devices are addressed, what instructions are used, and state which processor families have adopted each approach.",
- hint:"Shared I/O = separate address space; Memory-Mapped = I/O registers treated as memory locations.",
- answer:`<strong>Shared I/O (Isolated I/O):</strong><br>
-• I/O devices are assigned addresses from a <em>separate address space</em>, isolated from the memory address space.<br>
-• Special I/O instructions are used: INPUT (to read from device) and OUTPUT (to write to device).<br>
-• The CPU uses a separate control line to distinguish memory access from I/O access.<br>
-• Address decoder circuitry in each device identifies when its address is selected.<br>
-• <strong>Advantage:</strong> Clear separation between memory and I/O address spaces.<br>
-• <strong>Disadvantage:</strong> Requires special I/O instructions in the instruction set; more complex instruction set design.<br>
-• <strong>Adopted by: Intel (x86 architecture).</strong><br><br>
-<strong>Memory-Mapped I/O:</strong><br>
-• I/O device registers are mapped into the <em>main memory address space</em> — treated as regular memory locations.<br>
-• Standard LOAD/READ and STORE/WRITE instructions are used to access I/O devices — no special I/O instructions needed.<br>
-• Example: a READ from address 0xFF00 might read from a keyboard register rather than actual memory.<br>
-• <strong>Advantage:</strong> Simpler instruction set — all memory addressing modes can be used for I/O; no need for special I/O instructions.<br>
-• <strong>Disadvantage:</strong> Reduces the available memory address space (some addresses are reserved for I/O devices).<br>
-• <strong>Adopted by: Motorola.</strong>`},
+{id:120,topic:7,diff:"easy",marks:5,
+ q:"What is the difference between Isolated I/O (Shared I/O) and Memory-Mapped I/O? Give one advantage of each.",
+ hint:"Isolated I/O = separate address space for devices. Memory-Mapped = devices share the memory address space.",
+ answer:`<strong>Isolated I/O (Shared I/O):</strong> I/O devices are given addresses from a completely separate address space, not the memory address space. Special IN/OUT instructions are required to access them.<br>
+✅ Advantage: Clear separation between memory and I/O — no confusion about what an address refers to.<br>
+Used by: Intel (x86).<br><br>
+<strong>Memory-Mapped I/O:</strong> I/O device registers are assigned addresses within the regular memory address space. Normal LOAD and STORE instructions are used to talk to devices.<br>
+✅ Advantage: No need for special I/O instructions — the full set of memory addressing modes works for I/O too.<br>
+Used by: Motorola.`},
 
-{id:121,topic:7,diff:"hard",marks:10,
- q:"Explain the Interrupt mechanism in detail. What conditions can cause an interrupt? List the steps performed by an Interrupt Service Routine (ISR). Compare Daisy Chain Bus Arbitration (DCBA) and Independent Source Bus Arbitration (ISBA) for handling simultaneous interrupt requests.",
- hint:"Think: what triggers an interrupt? How does the CPU know who interrupted it?",
- answer:`<strong>Conditions that cause an interrupt:</strong><br>
-1. Power failure detected by sensor<br>
-2. Arithmetic conditions (overflow, underflow)<br>
-3. Illegal data or illegal instruction code<br>
-4. Errors in data transmission or storage<br>
-5. Software-generated interrupts (user program requests)<br>
-6. Normal completion of an asynchronous I/O transfer<br><br>
-<strong>Steps performed by an ISR:</strong><br>
-1. Disable further interrupts (temporarily)<br>
-2. Save the processor status (all registers, PC, PSW)<br>
-3. Enable further interrupts (to allow higher-priority interrupts)<br>
-4. Determine the cause of the interrupt<br>
-5. Service the interrupt (execute the relevant I/O or error handling code)<br>
-6. Disable interrupts again<br>
-7. Restore processor status (reload saved registers)<br>
-8. Return from interrupt (resume interrupted program at the saved PC)<br><br>
-<strong>DCBA (Daisy Chain Bus Arbitration):</strong><br>
-• All devices share a single interrupt request line (INR).<br>
-• The CPU sends a grant signal down a daisy-chained grant line (GL).<br>
-• Priority = physical proximity to CPU — the nearest device gets the grant first (highest priority).<br>
-• Simple but inflexible — priority is fixed by physical position.<br><br>
-<strong>ISBA (Independent Source Bus Arbitration):</strong><br>
-• Each device has its OWN dedicated interrupt request AND grant lines.<br>
-• Priority does NOT depend on physical location — a separate priority arbitration circuit determines which simultaneous request to grant.<br>
-• More flexible (priority can be set by the circuit), but requires more wires and complex arbitration hardware.`},
+{id:121,topic:7,diff:"medium",marks:7,
+ q:"What is an interrupt? Give two conditions that can cause an interrupt. Briefly describe what the CPU does when an interrupt occurs (the main steps of handling it).",
+ hint:"An interrupt is a signal that tells the CPU to stop what it is doing and attend to something urgent.",
+ answer:`An <strong>interrupt</strong> is a signal sent to the CPU by hardware or software to indicate that an event requires immediate attention. The CPU pauses its current task to handle the event.<br><br>
+<strong>Two conditions that can cause an interrupt:</strong><br>
+1. Completion of an I/O transfer (e.g. a disk read finishing).<br>
+2. An arithmetic error (e.g. division by zero or overflow).<br><br>
+<strong>Steps when an interrupt occurs:</strong><br>
+1. The CPU finishes its current instruction, then checks for the interrupt.<br>
+2. It saves its current state (registers, Program Counter) so it can resume later.<br>
+3. It jumps to the <strong>Interrupt Service Routine (ISR)</strong> — a special function that handles the event.<br>
+4. After the ISR finishes, the saved state is restored and the CPU continues where it left off.`},
 
 // ---- TOPIC 8: PIPELINING ----
-{id:122,topic:8,diff:"hard",marks:12,
- q:"Explain the concept of pipelining. Define and derive the three performance metrics: Speed-up S(n), Throughput U(n), and Efficiency E(n) for an n-stage pipeline executing m tasks. State the ideal (theoretical maximum) for each metric as m → ∞.",
- hint:"n + m − 1 total time units. Speed-up = sequential time / pipelined time.",
- answer:`<strong>Pipelining:</strong> A technique in which a task is divided into n sequential subtasks, each performed by a dedicated functional unit (stage). All stages operate simultaneously on different tasks — like an assembly line. This improves throughput compared to sequential execution.<br><br>
-<strong>Setup:</strong> Each stage takes T = t time units. An n-stage pipeline executing m tasks.<br>
-• Sequential time (no pipeline): m × n time units<br>
-• Pipelined time: n + m − 1 time units (n to fill pipeline, then 1 per remaining task)<br><br>
-<strong>1. Speed-up S(n):</strong><br>
-S(n) = (Sequential time) / (Pipelined time) = (m × n) / (n + m − 1)<br>
-As m → ∞: S(n) → n &nbsp; (theoretical n-fold speed-up)<br><br>
-<strong>2. Throughput U(n):</strong><br>
-U(n) = m / (n + m − 1) tasks per unit time<br>
-As m → ∞: U(n) → 1 (one task completed per clock cycle)<br><br>
-<strong>3. Efficiency E(n):</strong><br>
-E(n) = S(n) / n = m / [n × (n + m − 1)]<br>
-As m → ∞: E(n) → 1 (100% — all stages always busy)<br><br>
-<strong>Practical note:</strong> The ideal values are theoretical. In practice, pipeline hazards (stalls due to dependencies, cache misses, branch instructions) reduce speed-up and efficiency significantly.`},
+{id:122,topic:8,diff:"medium",marks:8,
+ q:"What is pipelining? Using a simple example, explain how it speeds up instruction execution. State the formula for Speed-up S(n) and calculate it for a 4-stage pipeline running 8 tasks.",
+ hint:"Pipelining is like an assembly line. Speed-up = (time without pipeline) / (time with pipeline).",
+ answer:`<strong>Pipelining</strong> is a technique that divides instruction execution into separate stages and processes multiple instructions simultaneously, with each stage working on a different instruction — like an assembly line in a factory.<br><br>
+<strong>Simple example:</strong> A 4-stage pipeline (Fetch, Decode, Execute, Store). Without a pipeline, each instruction finishes all 4 stages before the next begins. With a pipeline, by the time instruction 1 is in stage 2, instruction 2 is already in stage 1 — all stages run in parallel.<br><br>
+<strong>Speed-up formula:</strong><br>
+S(n) = (m × n) / (n + m − 1)<br>
+where n = number of stages, m = number of tasks.<br><br>
+<strong>For n = 4 stages, m = 8 tasks:</strong><br>
+Sequential time = 8 × 4 = 32 units<br>
+Pipelined time = 4 + 8 − 1 = 11 units<br>
+S(4) = 32 / 11 ≈ <strong>2.9×</strong> speed-up<br><br>
+As more tasks are run (m → ∞), speed-up approaches n (the number of stages).`},
 
-{id:123,topic:8,diff:"hard",marks:10,
- q:"What are pipeline hazards? Explain the concept of a pipeline stall (bubble) and describe how instruction dependency (specifically conditional branch instructions) causes stalls. Using a 4-stage pipeline (IF, ID, IE, IS) and 10 instructions where I4 is a conditional branch (branch not taken), draw or describe the resulting pipeline timing diagram (Gantt chart) showing where stalls occur.",
- hint:"When I4 is fetched, the pipeline stalls until the branch result is known (after IE stage of I4).",
- answer:`<strong>Pipeline Hazard:</strong> A condition that prevents the pipeline from executing instructions at full rate, causing stalls.<br><br>
-<strong>Pipeline Stall (Bubble):</strong> A stall occurs when one stage requires more time than the standard clock period, forcing subsequent stages to idle (wait). This creates 'bubbles' — wasted cycles in the pipeline.<br><br>
-<strong>Instruction Dependency:</strong> Fetching or executing an instruction depends on the result of a previous instruction. The most common case is a <strong>conditional branch</strong> — the next instruction to fetch depends on whether the branch is taken or not, which is only known after the branch executes (IE stage).<br><br>
-<strong>4-Stage Pipeline: IF→ID→IE→IS</strong><br>
-With I4 as a conditional branch (branch NOT taken, stall until branch result stored):<br><br>
-<pre style="font-family:Space Mono,monospace;font-size:12px;color:#a78bfa;overflow-x:auto">
-Clock:  1   2   3   4   5   6   7   8   9  10  11  12  ...
-I1:    IF  ID  IE  IS
-I2:        IF  ID  IE  IS
-I3:            IF  ID  IE  IS
-I4(BR):            IF  ID  IE  IS
-       ← Pipeline stalls here: I5–I10 wait for I4 result →
-I5:                        IF  ID  IE  IS
-I6:                            IF  ID  IE  IS
-...
-</pre>
-<strong>Stall impact:</strong> 3 extra cycles are wasted waiting for the branch result. The stall delay = (number of stages after IF that must complete before branch outcome is known).<br><br>
-<strong>Solutions to branch hazards:</strong> Branch prediction (guess taken/not-taken), delayed branching, or speculative execution.`},
+{id:123,topic:8,diff:"medium",marks:7,
+ q:"What is a pipeline hazard? Explain how a conditional branch instruction can cause a pipeline stall. Describe one technique used to reduce branch stalls.",
+ hint:"The pipeline doesn't know which instruction to fetch next until the branch finishes executing.",
+ answer:`A <strong>pipeline hazard</strong> is anything that prevents the pipeline from running at full speed — causing wasted cycles (called bubbles or stalls).<br><br>
+<strong>How a conditional branch causes a stall:</strong><br>
+When the pipeline encounters a conditional branch (e.g. "if condition, jump to X"), it doesn't yet know which instruction comes next — it needs to finish executing the branch to find out. Meanwhile, the pipeline has already started fetching the next sequential instructions. If the branch is taken, those fetched instructions are wrong and must be discarded, wasting several clock cycles.<br><br>
+<strong>One technique to reduce this — Branch Prediction:</strong><br>
+The processor <em>guesses</em> whether the branch will be taken or not, and continues fetching from the predicted path. If the prediction is correct, no cycles are wasted. If wrong, the incorrectly fetched instructions are flushed. Modern processors achieve over 95% prediction accuracy, making this very effective.`},
 
-{id:124,topic:8,diff:"medium",marks:8,
- q:"Explain what a pipeline stall is and give two different reasons why a pipeline might stall. For each reason, briefly describe one technique used to reduce or eliminate the stall.",
- hint:"Cache miss? Branch dependency? Think: what makes a stage take longer than expected?",
- answer:`A <strong>pipeline stall</strong> occurs when one pipeline stage requires more time than the allocated clock period, forcing subsequent stages to idle and wait — introducing wasted cycles (bubbles).<br><br>
-<strong>Reason 1: Cache Miss on Instruction Fetch</strong><br>
-If a cache miss occurs during IF, the processor must fetch the instruction from main memory, which takes several extra clock cycles. All downstream stages stall while waiting.<br>
-<strong>Solution:</strong> Use a larger or more effective instruction cache (L1 cache); implement <em>prefetching</em> — predict which instructions will be needed next and load them into cache in advance.<br><br>
-<strong>Reason 2: Instruction Dependency (Branch Hazard)</strong><br>
-When a conditional branch is encountered, the pipeline cannot know which instruction to fetch next until the branch condition is evaluated (IE stage). The pipeline stalls until the result is available.<br>
-<strong>Solution:</strong> <em>Branch prediction</em> — the processor guesses (predicts) whether the branch is taken or not and continues fetching from the predicted path. If the prediction is correct, no stall occurs. If wrong, the incorrectly fetched instructions are flushed (pipeline is squashed). Modern processors achieve >95% prediction accuracy using dynamic branch predictors.`},
+{id:124,topic:8,diff:"easy",marks:5,
+ q:"What is a pipeline stall? Give two reasons why a pipeline might stall, and for each reason name one way to reduce or prevent it.",
+ hint:"Think: what could make one stage take longer than expected?",
+ answer:`A <strong>pipeline stall</strong> occurs when a stage in the pipeline takes longer than the allocated clock cycle, causing the stages behind it to wait. These wasted cycles are called <em>bubbles</em>.<br><br>
+<strong>Reason 1: Cache Miss during Instruction Fetch</strong><br>
+The requested instruction is not in cache and must be fetched from slower main memory, taking extra cycles.<br>
+Solution: Use a larger instruction cache or implement <strong>prefetching</strong> (loading instructions before they are needed).<br><br>
+<strong>Reason 2: Conditional Branch (Control Hazard)</strong><br>
+The pipeline cannot know which instruction to fetch next until the branch condition is evaluated.<br>
+Solution: Use <strong>branch prediction</strong> — guess the outcome and fetch speculatively; flush if the guess is wrong.`},
+
+// ---- TOPIC 9: PAST PAPER STYLE ----
+{id:125,topic:9,diff:"medium",marks:4,
+ q:"(a) Distinguish between Computer Architecture and Computer Organisation. [4 marks]",
+ hint:"Architecture = visible to programmer. Organisation = internal hardware implementation.",
+ answer:`<strong>Computer Architecture</strong> refers to attributes visible to the software programmer that directly affect program execution — e.g. the instruction set, number of bits per data type, addressing modes.<br><br>
+<strong>Computer Organisation</strong> refers to the operational units and their interconnections that implement the architectural specification — these details are transparent (hidden) to the programmer — e.g. control signals, bus widths, memory technology used.`},
+
+{id:126,topic:9,diff:"medium",marks:4,
+ q:"(b) List the eight (8) general-purpose registers. [4 marks]",
+ hint:"These are the standard x86 32-bit general-purpose registers.",
+ answer:`The eight general-purpose registers in x86 architecture are:<br>
+1. <strong>EAX</strong> — Accumulator (arithmetic/logic operations)<br>
+2. <strong>EBX</strong> — Base register (memory addressing)<br>
+3. <strong>ECX</strong> — Count register (loops/shifts)<br>
+4. <strong>EDX</strong> — Data register (I/O, multiplication/division overflow)<br>
+5. <strong>ESI</strong> — Source Index (string/array source pointer)<br>
+6. <strong>EDI</strong> — Destination Index (string/array destination pointer)<br>
+7. <strong>ESP</strong> — Stack Pointer (top of stack)<br>
+8. <strong>EBP</strong> — Base Pointer (stack frame base for function calls)`},
+
+{id:127,topic:9,diff:"medium",marks:4,
+ q:"(c) Differentiate between Shared I/O and Memory-Mapped I/O. [4 marks]",
+ hint:"Think: do they share the same address space? What instructions are used for each?",
+ answer:`<strong>Shared I/O (Isolated I/O):</strong><br>
+• I/O devices occupy a <em>separate</em> address space, isolated from memory.<br>
+• Special IN and OUT instructions are required to access devices.<br>
+• Adopted by <strong>Intel</strong> (x86).<br><br>
+<strong>Memory-Mapped I/O:</strong><br>
+• I/O device registers are mapped into the <em>main memory address space</em> — treated as regular memory locations.<br>
+• Standard LOAD/STORE (read/write) instructions are used — no special I/O instructions needed.<br>
+• Adopted by <strong>Motorola</strong>.<br><br>
+<strong>Key difference:</strong> Shared I/O keeps I/O and memory separate; Memory-Mapped I/O uses a unified address space for both.`},
+
+{id:128,topic:9,diff:"medium",marks:5,
+ q:"(d) List the constituents of the memory system hierarchy. [5 marks]",
+ hint:"From fastest/most expensive to slowest/cheapest.",
+ answer:`The memory system hierarchy from fastest to slowest:<br>
+1. <strong>CPU Registers</strong> — fastest, smallest, built inside the processor<br>
+2. <strong>Cache Memory (L1, L2, L3)</strong> — very fast SRAM close to the CPU<br>
+3. <strong>Main Memory (RAM)</strong> — DRAM, holds active programs and data<br>
+4. <strong>Secondary Storage</strong> — hard disk drives (HDD) or SSDs, non-volatile<br>
+5. <strong>Tertiary Storage</strong> — magnetic tape, used for archival/backup<br><br>
+<em>Note: Each lower level is slower, cheaper, and has greater capacity than the level above it.</em>`},
+
+{id:129,topic:9,diff:"medium",marks:5,
+ q:"(e) List five (5) bus/interfaces and give one use of each. [5 marks]",
+ hint:"Think of the physical interfaces inside or on a PC: PCI, USB, SATA, AGP/PCIe, IDE...",
+ answer:`Five common buses/interfaces and their uses:<br>
+1. <strong>PCI (Peripheral Component Interconnect)</strong> — connects expansion cards (e.g. sound cards, network cards) to the motherboard.<br>
+2. <strong>USB (Universal Serial Bus)</strong> — connects external peripherals (keyboard, mouse, flash drives) to the PC.<br>
+3. <strong>SATA (Serial ATA)</strong> — connects hard drives and SSDs to the motherboard for data storage.<br>
+4. <strong>PCIe (PCI Express)</strong> — high-speed interface for GPUs and fast NVMe SSDs.<br>
+5. <strong>FSB / System Bus</strong> — connects the CPU to the chipset/main memory for data, address, and control signals.`},
+
+{id:130,topic:9,diff:"medium",marks:4,
+ q:"(f) Add the two floating-point numbers: 1.1100×2⁴ and 1.1000×2². Show all steps clearly. [5 marks]",
+ hint:"Step 1: Align exponents. Step 2: Add mantissas. Step 3: Normalise if needed.",
+ answer:`<strong>Step 1 — Align exponents:</strong><br>
+Both numbers must have the same exponent. 1.1000×2² must be shifted right by 2 to match exponent 4:<br>
+1.1000×2² = 0.011000×2⁴<br><br>
+<strong>Step 2 — Add mantissas:</strong><br>
+&nbsp;&nbsp;1.110000<br>
++ 0.011000<br>
+= 10.001000<br><br>
+<strong>Step 3 — Normalise:</strong><br>
+10.001000×2⁴ = 1.0001000×2⁵<br><br>
+<strong>Final answer: 1.0001×2⁵</strong><br>
+(In decimal: 1.1100×2⁴ = 28, 1.1000×2² = 6, sum = 34 = 1.0001×2⁵ = 32+2 = 34 ✓)`},
+
+{id:131,topic:9,diff:"hard",marks:8,
+ q:"(c) An Intel Pentium IV processor has an 8KB data cache, organised as 4-way set-associative with a block size of 64 bytes. The main memory size is 16MB. Identify the number of fields the main memory address would be divided into, and calculate the number of bits for each field. [8 marks]",
+ hint:"Fields: Tag | Index (Set) | Block Offset. Work out block offset first, then number of sets, then tag.",
+ answer:`<strong>Given:</strong><br>
+• Cache size = 8KB = 8 × 1024 = 8192 bytes<br>
+• Block (line) size = 64 bytes<br>
+• Associativity = 4-way<br>
+• Main memory = 16MB = 2²⁴ bytes → 24-bit address<br><br>
+<strong>Step 1 — Block Offset:</strong><br>
+Block size = 64 = 2⁶ → <strong>Block offset = 6 bits</strong><br><br>
+<strong>Step 2 — Number of Cache Lines:</strong><br>
+Total lines = 8192 ÷ 64 = 128 lines<br><br>
+<strong>Step 3 — Number of Sets:</strong><br>
+Sets = 128 ÷ 4 (4-way) = 32 sets = 2⁵ → <strong>Index (Set) field = 5 bits</strong><br><br>
+<strong>Step 4 — Tag:</strong><br>
+Tag = 24 − 5 − 6 = <strong>Tag = 13 bits</strong><br><br>
+<strong>Summary:</strong><br>
+| Tag (13 bits) | Set Index (5 bits) | Block Offset (6 bits) |<br>
+Total = 13 + 5 + 6 = 24 bits ✓`},
+
+{id:132,topic:9,diff:"medium",marks:4,
+ q:"(b) List four (4) conditions in which an interrupt may occur. [4 marks]",
+ hint:"Think of events that force the CPU to stop and attend to something urgent.",
+ answer:`Four conditions that can cause an interrupt:<br>
+1. <strong>Arithmetic condition</strong> — e.g. division by zero, overflow, or underflow during a calculation.<br>
+2. <strong>Power failure</strong> — a sensor detects sudden loss of power, triggering an interrupt to save state.<br>
+3. <strong>Completion of an I/O transfer</strong> — a device (e.g. disk, keyboard) signals it has finished transferring data.<br>
+4. <strong>Illegal instruction</strong> — the CPU encounters an invalid opcode or attempts to access a protected memory location.`},
+
+{id:133,topic:9,diff:"medium",marks:3,
+ q:"(c)(i) What is DMA? [2 marks]",
+ hint:"Who handles the data transfer in DMA — the CPU or something else?",
+ answer:`<strong>DMA (Direct Memory Access)</strong> is a method of data transfer in which a dedicated <strong>DMA controller</strong> manages the transfer of data directly between an I/O device and main memory, <strong>without CPU involvement</strong>.<br><br>
+The CPU only sets up the transfer at the start (providing start address, byte count, and direction). The DMA controller then takes over the bus and handles the transfer independently. When complete, it interrupts the CPU.`},
+
+{id:134,topic:9,diff:"medium",marks:3,
+ q:"(c)(ii) What are the constituents of a DMA controller? [3 marks]",
+ hint:"What does the DMA controller need to know to perform a transfer?",
+ answer:`A DMA controller contains the following key registers/components:<br>
+1. <strong>Address Register</strong> — holds the starting memory address for the data transfer.<br>
+2. <strong>Word Count Register</strong> — stores the number of bytes/words to be transferred; decremented after each transfer unit.<br>
+3. <strong>Control/Status Register</strong> — stores configuration (read or write direction, transfer mode) and status flags (busy, complete, error).<br><br>
+Additionally, DMA controllers have logic for bus arbitration (to request and use the system bus independently of the CPU).`},
 ];
 
 // =====================================================================
