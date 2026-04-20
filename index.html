@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Architecture & Organisation — Full Study Pack</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c10;
+    --surface: #13151c;
+    --card: #1a1d27;
+    --border: #252836;
+    --accent: #00e5ff;
+    --accent2: #ff6b6b;
+    --accent3: #a78bfa;
+    --accent4: #34d399;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --correct: #22c55e;
+    --wrong: #ef4444;
+    --highlight: #ffd60a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+  .container { position: relative; z-index: 1; max-width: 1040px; margin: 0 auto; padding: 24px 16px 80px; }
+
+  /* HEADER */
+  header { text-align: center; padding: 56px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+  .tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--accent); border: 1px solid var(--accent); padding: 4px 12px; margin-bottom: 18px; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.3)}50%{box-shadow:0 0 12px 4px rgba(0,229,255,.15)} }
+  h1 { font-size: clamp(26px,5vw,50px); font-weight: 800; line-height: 1.1; background: linear-gradient(135deg,#fff 0%,var(--accent) 60%,var(--accent3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+  .subtitle { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+  .stats-bar { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+  .stat-pill { font-family: 'Space Mono', monospace; font-size: 12px; padding: 5px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 2px; color: var(--muted); }
+  .stat-pill span { color: var(--accent); font-weight: 700; }
+
+  /* MAIN TABS */
+  .main-tabs { display: flex; gap: 0; margin-bottom: 32px; border-bottom: 2px solid var(--border); }
+  .main-tab { cursor: pointer; font-family: 'Space Mono', monospace; font-size: 13px; padding: 12px 28px; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s; letter-spacing: 1px; }
+  .main-tab:hover { color: var(--text); }
+  .main-tab.active.mcq-tab { color: var(--accent); border-bottom-color: var(--accent); }
+  .main-tab.active.theory-tab { color: var(--accent3); border-bottom-color: var(--accent3); }
+
+  /* SECTION PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* TOPIC FILTER */
+  .filter-section { margin-bottom: 24px; }
+  .filter-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
+  .topic-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pill { cursor: pointer; font-family: 'Space Mono', monospace; font-size: 10px; padding: 5px 12px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); transition: all .2s; border-radius: 2px; user-select: none; }
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill.active { font-weight: 700; }
+  .pill[data-topic="all"].active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .pill.t1.active { background: #00e5ff; color: #000; border-color: #00e5ff; }
+  .pill.t2.active { background: #ff6b6b; color: #fff; border-color: #ff6b6b; }
+  .pill.t3.active { background: #a78bfa; color: #000; border-color: #a78bfa; }
+  .pill.t4.active { background: #34d399; color: #000; border-color: #34d399; }
+  .pill.t5.active { background: #ffd60a; color: #000; border-color: #ffd60a; }
+  .pill.t6.active { background: #fb923c; color: #000; border-color: #fb923c; }
+  .pill.t7.active { background: #e879f9; color: #000; border-color: #e879f9; }
+  .pill.t8.active { background: #60a5fa; color: #000; border-color: #60a5fa; }
+
+  /* MODE + CONTROLS */
+  .mode-row { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .mode-btn { cursor: pointer; font-family: 'Space Mono', monospace; font-size: 11px; padding: 7px 16px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); transition: all .2s; border-radius: 2px; }
+  .mode-btn.active { border-color: var(--accent3); color: var(--accent3); }
+  .progress-info { margin-left: auto; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
+  .progress-info span { color: var(--highlight); }
+  .controls-row { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .btn { cursor: pointer; font-family: 'Space Mono', monospace; font-size: 11px; padding: 7px 14px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); border-radius: 2px; transition: all .2s; letter-spacing: 1px; }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary { border-color: var(--accent3); color: var(--accent3); }
+  .btn.primary:hover { background: var(--accent3); color: var(--bg); }
+
+  /* SCORE BOX */
+  .score-box { display: none; text-align: center; padding: 40px 24px; background: var(--card); border: 1px solid var(--border); margin-bottom: 32px; }
+  .score-box.show { display: block; }
+  .score-big { font-size: 56px; font-weight: 800; color: var(--accent); font-family: 'Space Mono', monospace; }
+  .score-label { color: var(--muted); font-family: 'Space Mono', monospace; font-size: 12px; margin-top: 6px; }
+
+  /* QUESTION CARDS */
+  .q-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--border); padding: 24px 24px 20px; margin-bottom: 16px; transition: box-shadow .2s; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)} }
+  .q-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+  .q-card.t1{border-left-color:#00e5ff}.q-card.t2{border-left-color:#ff6b6b}.q-card.t3{border-left-color:#a78bfa}
+  .q-card.t4{border-left-color:#34d399}.q-card.t5{border-left-color:#ffd60a}.q-card.t6{border-left-color:#fb923c}
+  .q-card.t7{border-left-color:#e879f9}.q-card.t8{border-left-color:#60a5fa}
+
+  .q-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  .q-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
+  .q-topic { font-family: 'Space Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; font-weight: 700; letter-spacing: 1px; }
+  .q-type { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 2px; }
+  .q-diff { margin-left: auto; font-family: 'Space Mono', monospace; font-size: 10px; }
+  .diff-easy{color:var(--correct)}.diff-medium{color:var(--highlight)}.diff-hard{color:var(--accent2)}
+  .t1-label{background:rgba(0,229,255,.12);color:#00e5ff}.t2-label{background:rgba(255,107,107,.12);color:#ff6b6b}
+  .t3-label{background:rgba(167,139,250,.12);color:#a78bfa}.t4-label{background:rgba(52,211,153,.12);color:#34d399}
+  .t5-label{background:rgba(255,214,10,.12);color:#ffd60a}.t6-label{background:rgba(251,146,60,.12);color:#fb923c}
+  .t7-label{background:rgba(232,121,249,.12);color:#e879f9}.t8-label{background:rgba(96,165,250,.12);color:#60a5fa}
+
+  .q-text { font-size: 15px; font-weight: 600; line-height: 1.65; margin-bottom: 18px; color: #f1f5f9; }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .option { cursor: pointer; display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border: 1px solid var(--border); background: var(--surface); border-radius: 2px; transition: all .15s; font-size: 14px; line-height: 1.5; }
+  .option:hover:not(.disabled){border-color:var(--accent3);background:rgba(167,139,250,.06)}
+  .option.selected{border-color:var(--accent3);background:rgba(167,139,250,.12)}
+  .option.correct{border-color:var(--correct);background:rgba(34,197,94,.12)}
+  .option.wrong{border-color:var(--wrong);background:rgba(239,68,68,.1)}
+  .option.disabled{cursor:default}
+  .option.reveal-correct{border-color:var(--correct);background:rgba(34,197,94,.08)}
+  .opt-letter{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;min-width:18px;color:var(--muted);padding-top:1px}
+  .option.selected .opt-letter{color:var(--accent3)}.option.correct .opt-letter{color:var(--correct)}
+  .option.wrong .opt-letter{color:var(--wrong)}.option.reveal-correct .opt-letter{color:var(--correct)}
+
+  /* ANSWER */
+  .answer-section { display: none; padding: 14px 16px; background: rgba(0,0,0,.3); border: 1px solid var(--border); border-radius: 2px; margin-bottom: 12px; animation: fadeIn .25s ease; }
+  .answer-section.show { display: block; }
+  .answer-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; }
+  .answer-text { font-size: 14px; line-height: 1.75; color: #cbd5e1; }
+
+  /* THEORY CARD EXTRAS */
+  .theory-hint { background: rgba(167,139,250,.07); border: 1px solid rgba(167,139,250,.2); border-radius: 2px; padding: 10px 14px; margin-bottom: 14px; }
+  .theory-hint-label { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--accent3); letter-spacing: 2px; margin-bottom: 6px; }
+  .theory-hint-text { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+  .marks-badge { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--highlight); border: 1px solid rgba(255,214,10,.3); padding: 2px 8px; border-radius: 2px; }
+
+  /* SHORT ANSWER TEXTAREA */
+  .short-answer-wrap textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Space Mono', monospace; font-size: 13px; padding: 12px; resize: vertical; min-height: 100px; outline: none; border-radius: 2px; transition: border-color .2s; margin-bottom: 12px; }
+  .short-answer-wrap textarea:focus { border-color: var(--accent3); }
+
+  /* ACTIONS */
+  .card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .no-results { text-align: center; padding: 50px; color: var(--muted); font-family: 'Space Mono', monospace; font-size: 13px; }
+  @media(max-width:600px){ .q-card{padding:16px 14px} .main-tab{padding:10px 16px;font-size:11px} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="tag">MR. STEP CHANGER · COMP ARCH & ORG · FULL STUDY PACK</div>
+  <h1>Computer Architecture<br>&amp; Organisation</h1>
+  <p class="subtitle">// MCQs + Theory Questions — separated for exam focus</p>
+  <div class="stats-bar">
+    <div class="stat-pill">MCQs: <span id="mcq-total">0</span></div>
+    <div class="stat-pill">Theory Qs: <span id="theory-total">0</span></div>
+    <div class="stat-pill">MCQ Score: <span id="score-display">0%</span></div>
+    <div class="stat-pill">Answered: <span id="answered-display">0</span></div>
+  </div>
+</header>
+
+<!-- MAIN TABS -->
+<div class="main-tabs">
+  <div class="main-tab mcq-tab active" onclick="switchPanel('mcq')">🎯 MCQ PRACTICE</div>
+  <div class="main-tab theory-tab" onclick="switchPanel('theory')">📝 THEORY QUESTIONS</div>
+</div>
+
+<!-- ===================== MCQ PANEL ===================== -->
+<div id="panel-mcq" class="panel active">
+  <div class="filter-section">
+    <div class="filter-label">// FILTER BY TOPIC</div>
+    <div class="topic-pills" id="mcq-pills">
+      <div class="pill active" data-topic="all">ALL</div>
+      <div class="pill t1" data-topic="1">1 · Introduction</div>
+      <div class="pill t2" data-topic="2">2 · Number Systems</div>
+      <div class="pill t3" data-topic="3">3 · Instruction Set</div>
+      <div class="pill t4" data-topic="4">4 · Processing Unit</div>
+      <div class="pill t5" data-topic="5">5 · Memory I</div>
+      <div class="pill t6" data-topic="6">6 · Memory II</div>
+      <div class="pill t7" data-topic="7">7 · I/O Design</div>
+      <div class="pill t8" data-topic="8">8 · Pipelining</div>
+    </div>
+  </div>
+  <div class="mode-row">
+    <div class="mode-btn active" data-mode="study" onclick="setMode('study')">📖 STUDY</div>
+    <div class="mode-btn" data-mode="quiz" onclick="setMode('quiz')">🎯 QUIZ</div>
+    <div class="progress-info">Visible: <span id="mcq-visible">0</span></div>
+  </div>
+  <div class="controls-row">
+    <button class="btn" onclick="revealAll()">REVEAL ALL</button>
+    <button class="btn" onclick="hideAll()">HIDE ALL</button>
+    <button class="btn primary" onclick="shuffleMCQ()">SHUFFLE</button>
+    <button class="btn" onclick="resetQuiz()">RESET QUIZ</button>
+  </div>
+  <div id="score-box" class="score-box">
+    <div class="score-big" id="final-score">0/0</div>
+    <div class="score-label">QUIZ COMPLETE 🎉 Keep pushing!</div>
+  </div>
+  <div id="mcq-container"></div>
+</div>
+
+<!-- ===================== THEORY PANEL ===================== -->
+<div id="panel-theory" class="panel">
+  <div class="filter-section">
+    <div class="filter-label">// FILTER BY TOPIC</div>
+    <div class="topic-pills" id="theory-pills">
+      <div class="pill active" data-topic="all">ALL</div>
+      <div class="pill t1" data-topic="1">1 · Introduction</div>
+      <div class="pill t2" data-topic="2">2 · Number Systems</div>
+      <div class="pill t3" data-topic="3">3 · Instruction Set</div>
+      <div class="pill t4" data-topic="4">4 · Processing Unit</div>
+      <div class="pill t5" data-topic="5">5 · Memory I</div>
+      <div class="pill t6" data-topic="6">6 · Memory II</div>
+      <div class="pill t7" data-topic="7">7 · I/O Design</div>
+      <div class="pill t8" data-topic="8">8 · Pipelining</div>
+    </div>
+  </div>
+  <div class="controls-row">
+    <button class="btn" onclick="revealAllTheory()">REVEAL ALL ANSWERS</button>
+    <button class="btn" onclick="hideAllTheory()">HIDE ALL ANSWERS</button>
+    <button class="btn primary" onclick="shuffleTheory()">SHUFFLE</button>
+  </div>
+  <div id="theory-container"></div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// =====================================================================
+// DATA
+// =====================================================================
+const TOPICS = {
+  1:{name:"Introduction",color:"t1",label:"t1-label"},
+  2:{name:"Number Systems & Arithmetic",color:"t2",label:"t2-label"},
+  3:{name:"Instruction Set Architecture",color:"t3",label:"t3-label"},
+  4:{name:"Processing Unit Design",color:"t4",label:"t4-label"},
+  5:{name:"Memory System I (Cache)",color:"t5",label:"t5-label"},
+  6:{name:"Memory System II",color:"t6",label:"t6-label"},
+  7:{name:"I/O Design",color:"t7",label:"t7-label"},
+  8:{name:"Pipelining",color:"t8",label:"t8-label"},
+};
+
+// ===================== MCQ QUESTIONS =====================
+const ALL_MCQ = [
+// ---- TOPIC 1: INTRODUCTION ----
+{id:1,topic:1,diff:"easy",q:"Which of the following best defines a computer?",
+ options:["A device that only displays information","Any data processing machine operated automatically under control of a stored program","A machine that stores data without processing it","A communication device used to send messages"],
+ answer:1,explanation:"A computer is any data processing machine operated automatically under the control of a list of instructions (a program) stored in its main memory."},
+
+{id:2,topic:1,diff:"easy",q:"Which type of computer supports many hundreds or thousands of users simultaneously?",
+ options:["Personal Computer","Minicomputer","Mainframe","Supercomputer"],
+ answer:2,explanation:"A Mainframe is a powerful multi-user computer capable of supporting many hundreds or thousands of users simultaneously."},
+
+{id:3,topic:1,diff:"medium",q:"Computer architecture refers to attributes of the system that are visible to:",
+ options:["The hardware engineer only","The software programmer","The OS kernel only","The database administrator only"],
+ answer:1,explanation:"Computer architecture refers to attributes visible to the software programmer that directly impact the logical execution of a program, such as the instruction set and memory addressing."},
+
+{id:4,topic:1,diff:"easy",q:"The first electronic computers used which of the following as switches?",
+ options:["Vacuum tubes","Transistors","Firmware","Mechanical switches"],
+ answer:0,explanation:"The first electronic computers used vacuum tubes as switches. Transistors came in the 2nd generation."},
+
+{id:5,topic:1,diff:"easy",q:"A computer system consists of the computer and its:",
+ options:["Operating System only","Peripherals (input, output, and secondary memory devices)","CPU and RAM only","Internet connection"],
+ answer:1,explanation:"A computer system = computer + its peripherals, which include input devices, output devices, and secondary memory devices."},
+
+{id:6,topic:1,diff:"medium",q:"Which of the following is a type of computer architecture?",
+ options:["Microarchitecture","Harvard Architecture","Von-Neumann Architecture","All of the mentioned"],
+ answer:3,explanation:"Microarchitecture, Harvard Architecture, and Von-Neumann Architecture are all types of computer architecture."},
+
+{id:7,topic:1,diff:"medium",q:"Which type of computer architecture is most widely used in computers today?",
+ options:["Microarchitecture","Harvard Architecture","Von-Neumann Architecture","System Design"],
+ answer:2,explanation:"Von-Neumann Architecture (stored-program architecture) is the most widely used type in computers today."},
+
+{id:8,topic:1,diff:"easy",q:"The Von Neumann architecture is which of the following?",
+ options:["SISD","SIMD","MIMD","MISD"],
+ answer:0,explanation:"Von Neumann architecture follows the SISD (Single Instruction Stream, Single Data Stream) model — one instruction processed at a time on one data stream."},
+
+{id:9,topic:1,diff:"medium",q:"The Operating Systems service that provides an interface between a running program and the hardware is called:",
+ options:["System Call","Booting","Caching","Program execution"],
+ answer:0,explanation:"A System Call is the OS service that provides the interface between a running program and the hardware."},
+
+{id:10,topic:1,diff:"easy",q:"The point of communication between two systems or between a system and a user is called:",
+ options:["An interface","Communication link","A Program","Booting"],
+ answer:0,explanation:"An interface is the point of communication between two systems or between a system and a user."},
+
+// ---- TOPIC 2: NUMBER SYSTEMS ----
+{id:11,topic:2,diff:"easy",q:"What is the radix (base) of the binary number system?",
+ options:["8","10","2","16"],
+ answer:2,explanation:"Binary uses base 2 with digits 0 and 1. It is dominant in computer systems."},
+
+{id:12,topic:2,diff:"medium",q:"Using the Radix Divide Technique to convert decimal to binary, you:",
+ options:["Multiply by 2 repeatedly collecting integer parts","Divide by 2 repeatedly collecting remainders from last to first","Add consecutive powers of 2","Subtract 1 repeatedly"],
+ answer:1,explanation:"Radix Divide: divide successively by the target base, collect remainders from last to first."},
+
+{id:13,topic:2,diff:"medium",q:"Shifting a binary number LEFT by one position is equivalent to:",
+ options:["Dividing by 2","Adding 1","Multiplying by 2","Taking the 2's complement"],
+ answer:2,explanation:"Each left shift multiplies the binary number by 2 (inserts 0 into vacated LSB). Each right shift divides by 2."},
+
+{id:14,topic:2,diff:"hard",q:"The two popular complement number systems are:",
+ options:["Sign-Magnitude and 1s complement","Radix complement and Diminished Radix complement","BCD and Gray code","Unsigned and Signed magnitude"],
+ answer:1,explanation:"The two popular complement systems are Radix Complement (e.g. 2s complement) and Diminished Radix Complement (e.g. 1s complement)."},
+
+{id:15,topic:2,diff:"medium",q:"The primary advantage of complement number systems is:",
+ options:["They allow numbers to be stored with more bits","They reduce subtraction to addition, enabling all arithmetic with only addition hardware","They eliminate binary representation","They allow exact fractional storage"],
+ answer:1,explanation:"Complement systems represent negatives so subtraction becomes addition, allowing all four arithmetic operations with only adder hardware."},
+
+// ---- TOPIC 3: INSTRUCTION SET / ASC ----
+{id:16,topic:3,diff:"easy",q:"ASC stands for:",
+ options:["Advanced System Computer","A Simple Computer","Arithmetic and Storage Computer","Asynchronous Sequential Circuit"],
+ answer:1,explanation:"ASC = 'A Simple Computer' — a hypothetical 16-bit machine used to introduce organisation and programming concepts."},
+
+{id:17,topic:3,diff:"medium",q:"In ASC, a memory READ operation results in:",
+ options:["MBR is cleared","Memory content is altered","A copy of memory word is brought into MBR without altering memory","PC is decremented"],
+ answer:2,explanation:"READ: address → MAR, read signal = 1; memory logic copies the word into MBR. The memory word is NOT altered."},
+
+{id:18,topic:3,diff:"easy",q:"With a 16-bit address, how many memory locations can be addressed?",
+ options:["32K","64K","128K","256K"],
+ answer:1,explanation:"2^16 = 64K (64 × 1024) memory locations."},
+
+{id:19,topic:3,diff:"medium",q:"ASC's 5-bit PSR contains which condition bits?",
+ options:["Address, Data, Control, Clock, Reset","Carry(C), Negative(N), Zero(Z), Overflow(V), Interrupt Enable(I)","Fetch, Decode, Execute, Store, Halt","Read, Write, Input, Output, Interrupt"],
+ answer:1,explanation:"The PSR in ASC has 5 bits: C (Carry), N (Negative), Z (Zero), V (Overflow), I (Interrupt Enable)."},
+
+{id:20,topic:3,diff:"medium",q:"An (N × M)-unit memory notation means:",
+ options:["N bits per word, M total words","N words of M units each","N bytes of M bits each","N × M total instructions"],
+ answer:1,explanation:"An (N × M) memory contains N words, each of M units (bit, byte, or word)."},
+
+{id:21,topic:3,diff:"easy",q:"Which of the following is/are true about Instruction Set Architecture?",
+ options:["It is the interface between the computer's software and hardware","It includes attributes seen by the programmer","Both (i) and (ii) above","None of these"],
+ answer:2,explanation:"ISA is the interface between software and hardware and includes all attributes visible to the programmer."},
+
+// ---- TOPIC 4: PROCESSING UNIT ----
+{id:22,topic:4,diff:"easy",q:"The three major components of a typical CPU are:",
+ options:["RAM, ROM, and Cache","Register Set, ALU, and Control Unit","MAR, MBR, and PC","Keyboard, Monitor, and Disk"],
+ answer:1,explanation:"A typical CPU has: Register Set, Arithmetic Logic Unit (ALU), and Control Unit (CU)."},
+
+{id:23,topic:4,diff:"medium",q:"The Program Counter (PC) contains:",
+ options:["The result of the last arithmetic operation","The instruction currently being decoded","The address of the next instruction to be fetched","The current stack pointer value"],
+ answer:2,explanation:"The PC holds the address of the next instruction to be fetched from memory."},
+
+{id:24,topic:4,diff:"medium",q:"The two approaches to implementing the CPU control unit are:",
+ options:["Synchronous and Asynchronous","Hardwired Control and Microprogramming","RISC and CISC","Interrupt-driven and Polling"],
+ answer:1,explanation:"Control unit is implemented via Hardwired Control (fast, fixed) or Microprogramming (flexible, stored microinstructions)."},
+
+{id:25,topic:4,diff:"easy",q:"The primary functions of the CPU are:",
+ options:["Fetch, decode and execute program instructions","Transfer data to/from memory and I/O","Respond to external interrupts","All of them are true"],
+ answer:3,explanation:"The CPU: fetches/decodes/executes instructions, transfers data to/from memory and I/O, responds to interrupts, and provides overall timing and control."},
+
+{id:26,topic:4,diff:"medium",q:"Which of the following is true about the Dual-core CPU?",
+ options:["It is a single CPU with two strong cores and functions like a dual CPU","It can execute more than one operation at the same time and at higher speed","Single-core CPUs are faster than Dual-core CPUs","(i) and (ii) are true"],
+ answer:3,explanation:"A Dual-core CPU is a single chip with two processing cores — it functions like a dual CPU and executes multiple operations simultaneously at higher speed."},
+
+{id:27,topic:4,diff:"medium",q:"Which of the following is true about the Quad-Core CPU?",
+ options:["It comprises two strong cores","It has 4 cores working simultaneously","It divides workload into four cores","(ii) and (iii) are true"],
+ answer:3,explanation:"A Quad-Core CPU has 4 cores working simultaneously and divides workload into four parts."},
+
+{id:28,topic:4,diff:"hard",q:"Which of the following is true about the SIMD machine organisation?",
+ options:["All processing units execute the same instruction on different data elements","Each processing unit runs different instructions","Only one instruction stream is active","Instructions are executed sequentially"],
+ answer:0,explanation:"SIMD: all processing units execute the SAME instruction at any given clock cycle, each on a different data element."},
+
+{id:29,topic:4,diff:"hard",q:"Which is true about MIMD machine organisation?",
+ options:["Every processor may execute a different instruction stream","Every processor may work with a different data stream","Execution can be synchronous or asynchronous","All of them are true"],
+ answer:3,explanation:"MIMD: every processor may execute a different instruction stream AND work with a different data stream; execution can be synchronous or asynchronous."},
+
+{id:30,topic:4,diff:"medium",q:"Which of the following carries data between the CPU and other components?",
+ options:["Power Unit","Form factor","Registers","Controller Hub"],
+ answer:2,explanation:"Registers carry data between the CPU and other internal components during instruction execution."},
+
+// ---- TOPIC 5: MEMORY I ----
+{id:31,topic:5,diff:"easy",q:"The fastest memory in a computer system is made from which technology?",
+ options:["SRAM","ROM","RAM","Virtual Memory","DRAM"],
+ answer:0,explanation:"SRAM (Static RAM) is the fastest — it is used for CPU registers and cache. It does not need periodic refreshing."},
+
+{id:32,topic:5,diff:"easy",q:"Cache memory is faster to access than:",
+ options:["CPU Registers","RAM","Both registers and RAM","None"],
+ answer:1,explanation:"Cache is faster to access than RAM (main memory). CPU Registers are faster than cache."},
+
+{id:33,topic:5,diff:"medium",q:"The reason for the implementation of cache memory is:",
+ options:["To increase internal memory","The difference in speeds of processor and memory","To reduce memory access and cycle time","All of the mentioned"],
+ answer:3,explanation:"Cache is implemented due to: the speed gap between processor and memory, to reduce memory access time, and to reduce cycle time — all of the mentioned reasons."},
+
+{id:34,topic:5,diff:"easy",q:"The number of successful accesses to memory stated as a fraction is called:",
+ options:["Access rate","Success rate","Hit rate","Miss rate"],
+ answer:2,explanation:"The Hit Rate (or hit ratio) is the fraction of memory accesses that are successfully found in the faster memory level (e.g. cache)."},
+
+{id:35,topic:5,diff:"medium",q:"Which of the following is true about SRAM?",
+ options:["Used for most main memory in modern PCs","Does not need periodic refresh rates","Needs 6 transistors per bit of storage","(ii) and (iii) are true"],
+ answer:3,explanation:"SRAM does NOT need periodic refreshing AND uses a cluster of 6 transistors per bit — making it fast but expensive and power-hungry."},
+
+{id:36,topic:5,diff:"easy",q:"Which of the following memories must be refreshed many times per second?",
+ options:["Static RAM","Dynamic RAM","EPROM","ROM"],
+ answer:1,explanation:"Dynamic RAM (DRAM) stores charge on capacitors that leak, so it must be refreshed many times per second (typically every few milliseconds)."},
+
+{id:37,topic:5,diff:"medium",q:"A special high-speed temporary storage device where frequently accessed data can be stored for rapid access is called:",
+ options:["ROM","DRAM","Cache Memory","CMOS"],
+ answer:2,explanation:"Cache Memory is the special high-speed temporary storage that holds frequently accessed data close to the CPU."},
+
+{id:38,topic:5,diff:"easy",q:"Which of the following is the internal memory of a computer system?",
+ options:["CPU registers","Cache","Main memory","All of these"],
+ answer:3,explanation:"Internal memory includes CPU registers, cache, and main memory — all are internal to the computing system."},
+
+{id:39,topic:5,diff:"medium",q:"To reduce the memory access time we generally make use of:",
+ options:["SDRAMs","Heaps","Cache","Higher capacity RAMs"],
+ answer:2,explanation:"Cache memory is used to reduce memory access time by storing frequently accessed data closer to the CPU."},
+
+{id:40,topic:5,diff:"hard",q:"The major drawback of building a large memory with DRAM is:",
+ options:["The large cost factor","The inefficient memory organisation","The slow speed of operation","All of the mentioned"],
+ answer:3,explanation:"Large DRAM memory suffers from: high cost, inefficient organisation, and slow speed of operation relative to the CPU — all mentioned factors."},
+
+{id:41,topic:5,diff:"medium",q:"Which of the following carries memory addresses from the processor to other components like primary memory and I/O devices?",
+ options:["Registers","Form factor","Address Bus","Chipset"],
+ answer:2,explanation:"The Address Bus carries memory addresses from the processor to other components such as primary memory and I/O devices."},
+
+{id:42,topic:5,diff:"medium",q:"Which of the following carries control signals from the CPU to other components?",
+ options:["Control Bus","Data Bus","Address Bus","Chipset"],
+ answer:0,explanation:"The Control Bus carries control signals from the CPU to other components; it also carries the clock pulse. It is unidirectional."},
+
+// ---- TOPIC 6: MEMORY II ----
+{id:43,topic:6,diff:"easy",q:"Virtual memory is a technique that:",
+ options:["Increases physical RAM size by adding chips","Uses secondary storage to extend apparent size of physical memory","Stores only OS code","Replaces cache with disk storage"],
+ answer:1,explanation:"Virtual memory uses secondary storage (hard disk) to extend the apparent size of physical memory beyond its actual physical size."},
+
+{id:44,topic:6,diff:"medium",q:"A 'page fault' occurs when:",
+ options:["A page is found in main memory","The cache is full","The page containing the requested word is not in main memory and must be fetched from disk","The CPU executes an illegal instruction"],
+ answer:2,explanation:"A page fault occurs when the required page is NOT in main memory and must be brought in from the hard disk."},
+
+{id:45,topic:6,diff:"hard",q:"The MMU is responsible for:",
+ options:["Managing cache replacement","Translating virtual addresses to physical addresses","Arbitrating DMA and CPU bus access","Scheduling CPU processes"],
+ answer:1,explanation:"The Memory Management Unit (MMU) translates virtual (logical) addresses issued by the processor into physical addresses."},
+
+{id:46,topic:6,diff:"medium",q:"Dynamic RAM requires periodic refreshing because:",
+ options:["Its transistors wear out quickly","Stored charge on capacitors leaks causing values to decay","It operates at higher frequency","It uses optical storage"],
+ answer:1,explanation:"DRAM stores logic values using a capacitor + transistor. Capacitors leak charge, so values decay and must be refreshed every few milliseconds."},
+
+{id:47,topic:6,diff:"medium",q:"The flash memory modules designed to replace the functioning of a hard disk is:",
+ options:["RIMM","FIMM","Flash drives","DIMM"],
+ answer:2,explanation:"Flash drives (SSDs) are flash memory modules designed to replace the functioning of a traditional hard disk."},
+
+{id:48,topic:6,diff:"medium",q:"Which is true about ROM (Read-Only Memory)?",
+ options:["ROM is a nonvolatile memory","It does not need periodic refresh rates","ROM is ideal for PC startup instructions and system boot software","All of them are true"],
+ answer:3,explanation:"ROM: nonvolatile (retains data without power), no refresh needed, and ideal for storing startup instructions and boot software."},
+
+{id:49,topic:6,diff:"easy",q:"Memory management technique in which the system stores and retrieves data from secondary storage for use in main memory is called:",
+ options:["Fragmentation","Paging","Mapping","Tagging"],
+ answer:1,explanation:"Paging is the memory management technique where data is moved between secondary storage and main memory in fixed-size pages."},
+
+{id:50,topic:6,diff:"easy",q:"The difference between memory and storage is that memory is ___ and storage is ___:",
+ options:["Temporary, permanent","Permanent, temporary","Slow, fast","Permanent, slow"],
+ answer:0,explanation:"Memory (RAM) is temporary — it loses data when powered off. Storage (disk) is permanent — it retains data without power."},
+
+{id:51,topic:6,diff:"medium",q:"The interface that serves as a pathway connecting the processor to memory and other components is known as:",
+ options:["Bus interface","Cables and connectors","Cache Memory","Logic board (Controller or Printed Circuit Board)"],
+ answer:0,explanation:"The Bus Interface is the pathway that connects the processor to memory and other components."},
+
+{id:52,topic:6,diff:"medium",q:"Generally, Dynamic RAM is used as the main memory in a computer system because it:",
+ options:["Consumes less power","Has higher speed","Has lower cell density","Needs refreshing circuitry"],
+ answer:2,explanation:"DRAM is used for main memory because it has lower cell density (simpler 1-transistor + 1-capacitor cell), making it cheaper and allowing higher capacity."},
+
+{id:53,topic:6,diff:"easy",q:"The main memory in a Personal Computer (PC) is made of:",
+ options:["Cache memory","Static RAM","Dynamic RAM","Chipset"],
+ answer:2,explanation:"The main memory (RAM) in a PC is made of Dynamic RAM (DRAM), specifically modern variants like DDR SDRAM."},
+
+// ---- TOPIC 7: I/O DESIGN ----
+{id:54,topic:7,diff:"easy",q:"The three modes of I/O transfer are:",
+ options:["Synchronous, Asynchronous, Isochronous","Programmed I/O, Interrupt-Driven I/O, Direct Memory Access (DMA)","Serial, Parallel, Wireless","Read, Write, Execute"],
+ answer:1,explanation:"The three I/O modes: Programmed I/O (CPU polls), Interrupt-driven I/O (device notifies CPU), and DMA (controller handles transfer independently)."},
+
+{id:55,topic:7,diff:"medium",q:"The main advantage of Memory-Mapped I/O over Shared I/O is:",
+ options:["Provides more address space","Eliminates need for special I/O instructions — uses regular read/write instructions","Allows faster DMA","Adopted by Intel"],
+ answer:1,explanation:"Memory-Mapped I/O treats I/O registers as regular memory — standard read/write instructions work, so no special I/O instructions are needed. Disadvantage: reduces memory address space."},
+
+{id:56,topic:7,diff:"medium",q:"The main disadvantage of Programmed (Polling) I/O is:",
+ options:["Requires complex hardware","Too fast for slow peripherals","Slow — CPU busy-waits (polls) device status continuously","Cannot handle keyboard input"],
+ answer:2,explanation:"Programmed I/O is slow because the CPU continuously checks (polls) device status, wasting CPU cycles."},
+
+{id:57,topic:7,diff:"hard",q:"In Daisy Chain Bus Arbitration (DCBA), interrupt priority is determined by:",
+ options:["Device with most pending data","A programmable priority register","Physical proximity to processor — nearest has highest priority","Device that sends interrupt first"],
+ answer:2,explanation:"In DCBA, the grant signal passes from CPU down a daisy chain. The device physically nearest the CPU receives grant first = highest priority."},
+
+{id:58,topic:7,diff:"medium",q:"Which of the following is true about the Control Bus?",
+ options:["It carries control signals from CPU to other components","The Control Bus also carries the clock's pulse","The Control Bus is unidirectional","All of them are true"],
+ answer:3,explanation:"The Control Bus: carries control signals from CPU, carries clock pulse, and is unidirectional — all three statements are true."},
+
+{id:59,topic:7,diff:"medium",q:"The Motherboard is also called:",
+ options:["System board","Meter board","Plain board","Computer socket"],
+ answer:0,explanation:"The Motherboard is also called the System Board (or main board/logic board). It is the central hub connecting all PC components."},
+
+{id:60,topic:7,diff:"medium",q:"The main hub and central nervous system of the PC is called:",
+ options:["System Unit","Form factor","System Configuration","Chipset"],
+ answer:3,explanation:"The Chipset is the main hub and central nervous system of the PC, managing data flow between the CPU, memory, and peripherals."},
+
+{id:61,topic:7,diff:"medium",q:"Which of the following holds the ROM, CPU, RAM and expansion cards?",
+ options:["Hard disk","Floppy disk","Motherboard","Power Supply"],
+ answer:2,explanation:"The Motherboard (system board) holds and interconnects the ROM, CPU, RAM, and expansion cards."},
+
+{id:62,topic:7,diff:"easy",q:"Which one of the following is NOT a secondary storage?",
+ options:["Magnetic disks","Magnetic tapes","RAM","None of the mentioned"],
+ answer:2,explanation:"RAM is primary (main) memory, not secondary storage. Magnetic disks and tapes are secondary storage devices."},
+
+// ---- TOPIC 8: PIPELINING ----
+{id:63,topic:8,diff:"easy",q:"Pipelining improves CPU performance by:",
+ options:["Running a single task faster with more hardware","Dividing a task into subtasks and executing multiple subtasks simultaneously across different stages","Using a larger cache","Increasing clock frequency of a single processor"],
+ answer:1,explanation:"Pipelining divides tasks into sequential subtasks (stages), each in a dedicated stage — all stages operate simultaneously on different tasks, improving throughput."},
+
+{id:64,topic:8,diff:"medium",q:"For an n-stage pipeline executing m tasks, the total time required is:",
+ options:["n × m","n + m","n + m − 1","m / n"],
+ answer:2,explanation:"Total time = n + m − 1 time units (n units to fill the pipeline initially, then one per remaining task)."},
+
+{id:65,topic:8,diff:"hard",q:"A pipeline 'bubble' or hazard is caused by:",
+ options:["An ALU overflow","A stage requiring extra time, forcing subsequent stages to stall and idle","Running out of registers","A cache hit that is too fast"],
+ answer:1,explanation:"A pipeline stall/bubble occurs when one stage takes longer than the clock period (e.g. cache miss on fetch), forcing other stages to idle."},
+
+{id:66,topic:8,diff:"hard",q:"Instruction dependency in a pipeline means:",
+ options:["Two instructions using the same address","Fetching/executing an instruction depends on the result of a previous instruction (e.g. conditional branch)","Instructions share the same opcode","Dependency on cache hit ratio"],
+ answer:1,explanation:"Instruction dependency: executing an instruction depends on a previous instruction's result — most common with conditional branches, causing pipeline stalls."},
+
+{id:67,topic:8,diff:"medium",q:"___ is the bottleneck when it comes to computer performance.",
+ options:["Memory access time","Memory cycle time","Delay","Latency"],
+ answer:0,explanation:"Memory access time is the primary bottleneck in computer performance — the speed gap between fast CPUs and slower memory is the key limiting factor."},
+
+{id:68,topic:8,diff:"medium",q:"Which of the following is true about the SISD machine organisation?",
+ options:["Only one instruction stream is acted on by the CPU during any clock cycle","Only one data stream is used as input during any one clock cycle","Instructions are executed sequentially but may overlap in execution stages","All of them are true"],
+ answer:3,explanation:"SISD: one instruction stream per clock cycle, one data stream used per cycle, and instructions may be overlapped in pipeline stages — all statements are true."},
+
+{id:69,topic:8,diff:"medium",q:"Which of the following is true about MISD machine organisation?",
+ options:["Each processing unit operates on data independently via separate instruction streams","A single data stream is fed into multiple processing units","Results (output) of one processor become input of the next in the macro pipe","All of them are true"],
+ answer:3,explanation:"MISD: each unit operates independently via separate instruction streams, a single data stream is shared, and output from one processor feeds the next — all true."},
+
+{id:70,topic:8,diff:"easy",q:"Which of the following is lowest in the memory hierarchy?",
+ options:["Cache memory","Secondary","Registers","RAM"],
+ answer:1,explanation:"Secondary storage (hard disk, tape) is at the bottom of the memory hierarchy — it is the largest, cheapest, and slowest. Registers are at the top (fastest)."},
+
+{id:71,topic:8,diff:"medium",q:"Cache memory acts between which of the following?",
+ options:["CPU and RAM","RAM and ROM","CPU and Hard Disk","GPU and CPU"],
+ answer:0,explanation:"Cache memory sits between the CPU and RAM (main memory), bridging the speed gap between the fast processor and slower main memory."},
+];
+
+// ===================== THEORY QUESTIONS =====================
+const ALL_THEORY = [
+// ---- TOPIC 1: INTRODUCTION ----
+{id:101,topic:1,diff:"hard",marks:10,
+ q:"Define Computer Architecture and Computer Organisation. Clearly distinguish between the two concepts and give two examples of attributes that fall under each.",
+ hint:"Think: what does the programmer see vs. what does the hardware engineer implement?",
+ answer:`<strong>Computer Architecture</strong> refers to those attributes of a computer system that are <em>visible to the software programmer</em> and have a direct impact on the logical execution of a program. Examples include: the instruction set (opcodes available), the number of bits used to represent data types (e.g. 32-bit vs 64-bit integers), memory addressing techniques, and I/O methods.<br><br>
+<strong>Computer Organisation</strong> refers to the operational units and their interconnections that <em>realise the architectural specification</em> — these details are transparent to the programmer. Examples include: how control signals work, the memory technology used (e.g. DRAM vs SRAM), bus widths, and whether the CPU uses hardwired or microprogrammed control.<br><br>
+<strong>Key distinction:</strong> Two machines can have the same architecture (same instruction set) but different organisations (e.g. different bus speeds, memory technologies). For example, all IBM 360 family machines shared the same architecture but had very different organisations.`},
+
+{id:102,topic:1,diff:"medium",marks:8,
+ q:"Classify and describe the four main types of computers by size and power. For each, state the typical user capacity and a distinguishing characteristic.",
+ hint:"Personal → Mini → Mainframe → Supercomputer",
+ answer:`<strong>1. Personal Computer (PC):</strong> A small, single-user computer based on a microprocessor. Includes a keyboard, monitor, and storage device. Designed for one user at a time.<br><br>
+<strong>2. Minicomputer:</strong> A multi-user computer capable of supporting from 10 to hundreds of users simultaneously. More powerful than a PC but smaller than a mainframe.<br><br>
+<strong>3. Mainframe:</strong> A powerful multi-user computer capable of supporting many hundreds or thousands of users simultaneously. Used by large organisations for bulk data processing (e.g. banks, airlines).<br><br>
+<strong>4. Supercomputer:</strong> An extremely fast computer that can perform hundreds of millions (or billions) of instructions per second. Used for complex scientific simulations, weather forecasting, and cryptography. Most powerful of all classes.`},
+
+{id:103,topic:1,diff:"hard",marks:10,
+ q:"Explain Flynn's Taxonomy for classifying computer architectures. Describe all four classes (SISD, SIMD, MISD, MIMD) with examples of each.",
+ hint:"Think about how many instruction streams and data streams are active simultaneously.",
+ answer:`Flynn's Taxonomy classifies computer systems based on the number of concurrent instruction streams and data streams:<br><br>
+<strong>1. SISD (Single Instruction, Single Data):</strong> One instruction stream, one data stream. Instructions execute sequentially (though stages may overlap in a pipeline). Traditional Von Neumann architecture. Example: classic single-core CPU.<br><br>
+<strong>2. SIMD (Single Instruction, Multiple Data):</strong> All processing units execute the SAME instruction simultaneously, each on a DIFFERENT data element. Example: GPU cores, vector processors used for image processing.<br><br>
+<strong>3. MISD (Multiple Instruction, Single Data):</strong> A single data stream is fed into multiple processing units, each performing different instructions. Output of one processor is input to the next (macro-pipe). Example: systolic arrays, some fault-tolerant systems.<br><br>
+<strong>4. MIMD (Multiple Instruction, Multiple Data):</strong> Every processor may execute a different instruction stream and work with a different data stream. Execution can be synchronous or asynchronous. Example: modern multi-core CPUs, distributed computing clusters.<br><br>
+Note: Von Neumann architecture is SISD; most modern parallel systems are MIMD.`},
+
+// ---- TOPIC 2: NUMBER SYSTEMS ----
+{id:104,topic:2,diff:"hard",marks:12,
+ q:"Explain the Radix Divide Technique and the Radix Multiply Technique for number base conversion. Using both methods, convert the decimal number 25.625 to binary. Show all steps clearly.",
+ hint:"Handle the integer part (25) and fractional part (.625) separately.",
+ answer:`<strong>Radix Divide Technique (for integers):</strong> Divide the integer successively by the target base, note the remainder at each step, stop when quotient = 0. Collect remainders from last to first.<br><br>
+<strong>Converting 25 to binary:</strong><br>
+25 ÷ 2 = 12 R <strong>1</strong><br>
+12 ÷ 2 = 6 R <strong>0</strong><br>
+6 ÷ 2 = 3 R <strong>0</strong><br>
+3 ÷ 2 = 1 R <strong>1</strong><br>
+1 ÷ 2 = 0 R <strong>1</strong><br>
+Reading remainders last to first: <strong>11001₂</strong><br>
+Verify: 16+8+1 = 25 ✓<br><br>
+<strong>Radix Multiply Technique (for fractions):</strong> Successively multiply the fraction by the target base; collect the integer part at each step from first to last. Stop when fraction = 0 or recurs.<br><br>
+<strong>Converting 0.625 to binary:</strong><br>
+0.625 × 2 = <strong>1</strong>.25 → bit: 1<br>
+0.25 × 2 = <strong>0</strong>.5 → bit: 0<br>
+0.5 × 2 = <strong>1</strong>.0 → bit: 1 (stop)<br>
+Fraction part: <strong>0.101₂</strong><br><br>
+<strong>Final answer: 25.625₁₀ = 11001.101₂</strong>`},
+
+{id:105,topic:2,diff:"hard",marks:10,
+ q:"Compare and contrast the Sign-Magnitude, 1's Complement, and 2's Complement representations of binary numbers. For an n-bit field (1 sign bit + n-1 magnitude bits), state the range of representable integers for each system, and identify the key practical advantage of 2's complement.",
+ hint:"Consider: zeros representation, arithmetic simplicity, and the representable range.",
+ answer:`<strong>Sign-Magnitude:</strong> MSB = sign (0=positive, 1=negative); remaining bits = magnitude. Range: -(2^(n-1) - 1) to +(2^(n-1) - 1). Problem: two representations of zero (+0 and -0). Arithmetic is complicated because sign and magnitude must be handled separately.<br><br>
+<strong>1's Complement:</strong> Negate by inverting all bits. Range: same as sign-magnitude: -(2^(n-1) - 1) to +(2^(n-1) - 1). Also has two zeros (+0 and -0), requiring end-around-carry in addition. Slightly simpler arithmetic than sign-magnitude.<br><br>
+<strong>2's Complement:</strong> Negate by inverting all bits then adding 1. Range: -2^(n-1) to +(2^(n-1) - 1). For 8 bits: -128 to +127. <strong>Key advantages:</strong> (1) Only ONE representation of zero — simplifies logic. (2) Subtraction is simply addition of the 2's complement negative — the same adder hardware handles both operations. (3) Wider range (one extra negative number). This is why 2's complement is universally used in modern computers.`},
+
+{id:106,topic:2,diff:"medium",marks:8,
+ q:"What is a number system? Explain the concepts of radix and positional notation. Give the general polynomial representation of a number and explain how it is used to convert from any base to decimal.",
+ hint:"Use the general formula: N = Σ dᵢ × rⁱ",
+ answer:`A <strong>number system</strong> uses a specific radix (base) to represent quantities using a finite set of digits. The digits range from 0 through r-1, where r is the radix.<br><br>
+<strong>Radix</strong> (base): the total number of unique digits in the system. E.g. binary r=2 (digits: 0,1); decimal r=10 (digits: 0–9); hex r=16 (digits: 0–9, A–F).<br><br>
+<strong>Positional Notation:</strong> The value of each digit depends on its position. A digit at position i (counting from 0 at the right) has weight rⁱ.<br><br>
+<strong>General polynomial representation:</strong><br>
+N = dₙ·rⁿ + dₙ₋₁·rⁿ⁻¹ + ... + d₁·r¹ + d₀·r⁰ + d₋₁·r⁻¹ + ...<br><br>
+<strong>Converting to decimal:</strong> Simply expand this polynomial using decimal arithmetic. Example: 1011.01₂ = 1×2³ + 0×2² + 1×2¹ + 1×2⁰ + 0×2⁻¹ + 1×2⁻² = 8 + 0 + 2 + 1 + 0 + 0.25 = 11.25₁₀`},
+
+// ---- TOPIC 3: INSTRUCTION SET ----
+{id:107,topic:3,diff:"hard",marks:12,
+ q:"With reference to the ASC (A Simple Computer), describe the complete memory READ and WRITE operations. Explain the role of the MAR and MBR in each operation, and state which operation alters memory content and which does not.",
+ hint:"Consider the sequence of register operations for each: what goes into MAR, what happens to MBR, and what signal is set?",
+ answer:`The <strong>Memory Address Register (MAR)</strong> holds the address of the memory word to be accessed. The <strong>Memory Buffer Register (MBR)</strong> holds the data being transferred to or from memory.<br><br>
+<strong>READ Operation:</strong><br>
+1. The address of the word to be read is placed in the MAR.<br>
+2. The read signal is set to 1.<br>
+3. Memory logic brings a COPY of the contents of the addressed word into the MBR.<br>
+4. <strong>The memory word is NOT altered</strong> — a read is non-destructive.<br>
+Notation: MBR ← M[MAR]<br><br>
+<strong>WRITE Operation:</strong><br>
+1. The data to be written is placed in the MBR by external logic.<br>
+2. The address of the target location is placed in the MAR.<br>
+3. The write signal is set to 1.<br>
+4. Memory logic transfers the MBR content into the addressed memory location.<br>
+5. <strong>The memory word IS altered</strong> — the previous content is destroyed.<br>
+Notation: M[MAR] ← MBR<br><br>
+<strong>Key distinction:</strong> READ is non-destructive (memory unchanged); WRITE is destructive (old value is overwritten).`},
+
+{id:108,topic:3,diff:"medium",marks:8,
+ q:"What is meant by 'byte-addressable' memory? Using a 16-bit address as an example, calculate the total number of addressable locations. Also explain the difference between a memory word and a byte in this context.",
+ hint:"2^n gives the number of addressable locations for an n-bit address.",
+ answer:`<strong>Byte-addressable memory:</strong> A memory organisation where every individual byte (8 bits) has its own unique address. This is the most common scheme in modern computers.<br><br>
+<strong>Calculation for 16-bit address:</strong><br>
+Number of addressable locations = 2^16 = 2^6 × 2^10 = 64 × 1024 = <strong>64K locations</strong><br>
+Since each location holds 1 byte, total memory = 64KB.<br><br>
+<strong>Memory Word vs. Byte:</strong><br>
+A <strong>byte</strong> is 8 bits — the basic addressable unit. A <strong>memory word</strong> is the most often accessed unit of data, typically larger than a byte. Common word sizes include 16, 32, or 64 bits. In a byte-addressable system, a word consists of 2, 4, or 8 consecutive bytes respectively. You can also address half-words, double-words, etc., depending on the architecture.`},
+
+{id:109,topic:3,diff:"hard",marks:10,
+ q:"Explain the concept of Instruction Set Architecture (ISA). What attributes does it define? Distinguish between RISC and CISC ISA design philosophies.",
+ hint:"ISA is the contract between software and hardware. RISC = simple, CISC = complex instructions.",
+ answer:`<strong>Instruction Set Architecture (ISA)</strong> is the interface between the computer's hardware and software. It defines all attributes visible to the programmer:<br>
+• The set of instructions (opcodes) the processor can execute<br>
+• Data types and their sizes (integer, floating-point, etc.)<br>
+• Memory addressing modes (direct, indirect, indexed, immediate)<br>
+• Register count and types<br>
+• I/O model<br>
+• Interrupt handling mechanism<br><br>
+<strong>RISC (Reduced Instruction Set Computer):</strong><br>
+• Small, simple instruction set — each instruction executes in one clock cycle<br>
+• Load/Store architecture — only load/store instructions access memory<br>
+• Many general-purpose registers<br>
+• Relies on compiler optimisation<br>
+• Examples: ARM, MIPS, RISC-V<br><br>
+<strong>CISC (Complex Instruction Set Computer):</strong><br>
+• Large instruction set with complex, multi-cycle instructions<br>
+• Instructions can directly operate on memory<br>
+• Fewer registers<br>
+• Hardware implements complex operations<br>
+• Examples: x86 (Intel/AMD)<br><br>
+<strong>Key trade-off:</strong> RISC = simpler hardware, faster pipeline; CISC = fewer instructions needed in a program but more complex hardware.`},
+
+// ---- TOPIC 4: PROCESSING UNIT ----
+{id:110,topic:4,diff:"hard",marks:12,
+ q:"Describe the complete CPU execution cycle (instruction cycle). List each step in order, explain what hardware components are involved at each step, and explain how interrupts fit into this cycle.",
+ hint:"Steps: Fetch → Decode → Fetch Operands → Execute → Store → Interrupt Check",
+ answer:`The <strong>CPU Execution Cycle</strong> (also called the Fetch-Decode-Execute cycle) is repeated for every instruction:<br><br>
+<strong>Step 1 — Instruction Fetch:</strong> The address in the PC is sent to the MAR. The instruction at that memory address is fetched into the MBR, then loaded into the IR. The PC is incremented to point to the next instruction.<br><br>
+<strong>Step 2 — Instruction Decode:</strong> The control unit decodes the opcode in the IR, determining what operation is required and what operands are needed.<br><br>
+<strong>Step 3 — Fetch Operands:</strong> If the instruction needs data from memory, the operand addresses are calculated and the operands are fetched into CPU registers.<br><br>
+<strong>Step 4 — Execute:</strong> The ALU or appropriate functional unit performs the operation specified by the instruction.<br><br>
+<strong>Step 5 — Store Results:</strong> If needed, results are written from CPU registers back to memory.<br><br>
+<strong>Step 6 — Interrupt Check:</strong> Before fetching the next instruction, the CPU checks for pending interrupts. If an interrupt is detected, the current program state is saved and an Interrupt Service Routine (ISR) is invoked. After the ISR completes, the saved state is restored and the cycle continues.<br><br>
+This cycle repeats indefinitely as long as there are instructions to execute.`},
+
+{id:111,topic:4,diff:"medium",marks:8,
+ q:"Explain the difference between General-Purpose Registers and Special-Purpose Registers in a CPU. Give three examples of special-purpose registers and describe the function of each.",
+ hint:"Think about PC, SP, IR, MAR, MDR, index registers...",
+ answer:`<strong>General-Purpose Registers (GPRs):</strong> Can be assigned to a variety of functions by the programmer. Used to hold operands, intermediate results, and addresses. The number of GPRs affects instruction set design — more GPRs = fewer memory accesses needed.<br><br>
+<strong>Special-Purpose Registers:</strong> Restricted to specific, fixed functions. Not directly accessible to the programmer in most architectures.<br><br>
+<strong>Three examples:</strong><br>
+1. <strong>Program Counter (PC):</strong> Contains the address of the next instruction to be fetched. It is automatically incremented after each fetch and modified by branch/jump instructions.<br><br>
+2. <strong>Stack Pointer (SP):</strong> Points to the current top of the stack in memory. Automatically decremented on PUSH and incremented on POP operations. Used for function calls and interrupt handling.<br><br>
+3. <strong>Instruction Register (IR):</strong> Holds the instruction currently being decoded and executed. Its content determines the control signals issued by the control unit.<br><br>
+Other examples include: MAR (Memory Address Register), MDR/MBR (Memory Data/Buffer Register), PSW (Program Status Word), Index Register.`},
+
+{id:112,topic:4,diff:"hard",marks:10,
+ q:"Compare Hardwired Control and Microprogrammed Control for the CPU control unit. What are the advantages and disadvantages of each? Under what circumstances would you prefer one over the other?",
+ hint:"Hardwired = speed; Microprogrammed = flexibility",
+ answer:`The <strong>Control Unit</strong> generates micro-orders (individual control signals) that direct the operation of the datapath. It can be implemented in two ways:<br><br>
+<strong>Hardwired Control:</strong><br>
+• The control logic is implemented directly as combinational and sequential logic circuits<br>
+• Control signals are generated by fixed hardware based on the instruction opcode and current state<br>
+• <strong>Advantages:</strong> Very fast — no memory lookup required; optimised for speed<br>
+• <strong>Disadvantages:</strong> Inflexible — changes to the instruction set require redesigning the hardware; complex to design and debug for large instruction sets<br>
+• Best for: RISC architectures with simple, fixed instruction sets<br><br>
+<strong>Microprogrammed Control:</strong><br>
+• The control logic is implemented using a Control Memory (ROM-like store) containing microinstructions<br>
+• Each machine instruction is implemented as a sequence of microinstructions (a microprogram)<br>
+• <strong>Advantages:</strong> Flexible — new instructions can be added by modifying the microprogram; easier to design and debug complex instruction sets<br>
+• <strong>Disadvantages:</strong> Slower than hardwired (requires memory access per microinstruction); more complex hardware<br>
+• Best for: CISC architectures with large, complex instruction sets<br><br>
+<strong>Preference:</strong> Modern high-performance CPUs often use hardwired control with RISC-like internal operations; CISC processors (e.g. x86) may use microcode internally to translate complex instructions.`},
+
+// ---- TOPIC 5: MEMORY I (CACHE) ----
+{id:113,topic:5,diff:"hard",marks:12,
+ q:"Explain the concept of the Memory Hierarchy. Describe each level from fastest to slowest, state the key parameters used to characterise each level, and explain why the hierarchy is structured this way (the speed-cost trade-off).",
+ hint:"Registers → Cache → Main Memory → Disk → Tape. Think about speed, cost, capacity.",
+ answer:`The <strong>Memory Hierarchy</strong> organises storage in levels from fastest/smallest/most expensive to slowest/largest/cheapest:<br><br>
+<strong>Level 1 — CPU Registers:</strong> Fastest storage, built into the CPU. Holds operands for current operations. Capacity: typically 8–64 registers. Very expensive per bit.<br><br>
+<strong>Level 2 — Cache Memory (L1/L2/L3):</strong> Small, very fast SRAM. Bridges the speed gap between CPU and main memory. Exploits temporal and spatial locality. Capacity: KB to MB.<br><br>
+<strong>Level 3 — Main Memory (RAM):</strong> Typically DRAM. Larger but slower than cache. Holds the active programs and data. Capacity: GB. Less expensive than cache.<br><br>
+<strong>Level 4 — Secondary Storage (Hard Disk/SSD):</strong> Magnetic or flash storage. Non-volatile. Very large but much slower. Capacity: TB. Cheap per bit.<br><br>
+<strong>Level 5 — Tertiary Storage (Tape):</strong> Magnetic tape. Used for archival backup. Massive capacity, extremely slow sequential access.<br><br>
+<strong>Key characterisation parameters:</strong> Access type, capacity (bytes), cycle time, latency, bandwidth, and cost (per megabyte).<br><br>
+<strong>Speed-Cost Trade-off:</strong> Fast memory (SRAM/registers) is very expensive — building the entire memory from it would be prohibitively costly. Slow memory (disk) is very cheap but too slow for the CPU. The hierarchy balances performance and cost: frequently used data is kept in fast, expensive memory; rarely used data stays in slow, cheap storage. This works because of the <strong>Principle of Locality of Reference</strong>.`},
+
+{id:114,topic:5,diff:"hard",marks:10,
+ q:"Explain the Principle of Locality of Reference. Distinguish between Temporal Locality and Spatial Locality, and explain how each type justifies aspects of cache memory design.",
+ hint:"Temporal = same location accessed again. Spatial = nearby locations accessed next.",
+ answer:`The <strong>Principle of Locality of Reference</strong> states that within a given period of time, programs tend to reference a relatively confined area of memory repeatedly. This is the fundamental principle that makes cache memory effective.<br><br>
+<strong>Temporal Locality:</strong> "Once a particular memory item has been referenced, it is most likely that it will be referenced again soon." Example: variables in a loop body are accessed repeatedly during each iteration.<br>
+→ <strong>Justifies keeping recently used data in cache.</strong> On a cache hit, the item is already present and is accessed again quickly. The average access time formula shows: as n (number of repeated accesses) increases, average access time → cache access time tₓ.<br><br>
+<strong>Spatial Locality:</strong> "When a given address has been referenced, it is most likely that addresses near it will be referenced within a short period." Example: consecutive instructions in a straight-line program; sequential array elements.<br>
+→ <strong>Justifies transferring entire blocks (cache lines) on a cache miss.</strong> When a miss occurs, a block of m consecutive words is loaded into cache. Due to spatial locality, all m words will likely be needed soon, reducing future misses. As block size m increases, average access time decreases.<br><br>
+<strong>Combined effect:</strong> The combination of temporal and spatial locality means the hit ratio stays very high in practice, making the memory hierarchy highly effective despite the large speed gap between cache and main memory.`},
+
+{id:115,topic:5,diff:"medium",marks:8,
+ q:"Compare the four types of memory classified by their access mechanism: RAM (RWM & ROM), CAM, SAM, and DAM. For each, state where it is typically used in a computer system.",
+ hint:"Think: which ones are primary memory, which are secondary? Which need sequential access?",
+ answer:`<strong>1. Random-Access Memory (RAM):</strong> Any memory location can be accessed in the same fixed time regardless of location or access sequence.<br>
+• <strong>RWM (Read/Write Memory):</strong> Can be read from and written to during normal operation. Used as main memory and cache.<br>
+• <strong>ROM (Read-Only Memory):</strong> Data can only be READ during normal operation. Written by manufacturer or user offline. Used for firmware, BIOS/UEFI, embedded systems.<br><br>
+<strong>2. Content-Addressable Memory (CAM) / Associative Memory:</strong> Data is accessed by content (value), not by address. A search key is compared simultaneously against all stored entries. Used in: cache tag arrays, TLBs (Translation Lookaside Buffers), network routing tables.<br><br>
+<strong>3. Sequential-Access Memory (SAM):</strong> Data must be accessed in sequence — you must pass through earlier locations to reach later ones. Access time depends on location. Used as: magnetic tape drives (archival/backup storage).<br><br>
+<strong>4. Direct-Access Memory (DAM):</strong> Direct access to a general region, then sequential access within that region. Between random and sequential. Used as: magnetic hard disk drives — the head moves directly to the right track, then waits for the right sector to rotate underneath.`},
+
+// ---- TOPIC 6: MEMORY II ----
+{id:116,topic:6,diff:"hard",marks:12,
+ q:"Explain Virtual Memory in detail. What problem does it solve? Describe how address translation works using Direct Mapping and Associative Mapping. State one advantage and one disadvantage of each.",
+ hint:"Virtual memory extends apparent RAM using disk. Focus on page tables and how the MMU translates addresses.",
+ answer:`<strong>Problem Solved:</strong> Physical main memory is limited and may not be large enough to hold all active programs simultaneously. Virtual memory allows programs to use more memory than is physically available by storing inactive portions on the hard disk.<br><br>
+<strong>How it works:</strong> Programs use virtual (logical) addresses. The Memory Management Unit (MMU) translates these to physical addresses. Data moves between disk and RAM in fixed-size units called <strong>pages</strong> (typically 2K–16K bytes). A <strong>page fault</strong> occurs when the required page is not in RAM — the OS must load it from disk.<br><br>
+<strong>1. Direct Mapping:</strong><br>
+• The virtual address is split into a virtual page number and an offset.<br>
+• The virtual page number directly indexes into the page table to find the physical page number.<br>
+• The physical address = physical page number + offset.<br>
+• <strong>Advantage:</strong> Simple — direct address calculation, fast lookup.<br>
+• <strong>Disadvantage:</strong> Very large page table required (one entry per possible virtual page).<br><br>
+<strong>2. Associative Mapping:</strong><br>
+• The page table is shorter; each entry stores both virtual and physical page numbers.<br>
+• A parallel associative search compares the virtual page number against ALL entries simultaneously.<br>
+• If a match is found, the physical page number is extracted and concatenated with the offset.<br>
+• <strong>Advantage:</strong> Much smaller page table; fast search (parallel).<br>
+• <strong>Disadvantage:</strong> Requires expensive Content-Addressable Memory (CAM) hardware.<br><br>
+Note: Set-Associative Mapping combines both: the virtual page number selects a set, and associative search occurs within that set — balancing speed and hardware cost.`},
+
+{id:117,topic:6,diff:"medium",marks:8,
+ q:"Distinguish between Static RAM (SRAM) and Dynamic RAM (DRAM). Compare them in terms of: cell construction, need for refreshing, speed, cost, and typical applications.",
+ hint:"SRAM = 6 transistors per bit. DRAM = 1 transistor + 1 capacitor per bit.",
+ answer:`<table style="width:100%;border-collapse:collapse;font-size:13px;color:#cbd5e1">
+<tr style="color:#00e5ff;font-family:monospace;font-size:11px"><td style="padding:6px 8px;border:1px solid #252836">Parameter</td><td style="padding:6px 8px;border:1px solid #252836">SRAM</td><td style="padding:6px 8px;border:1px solid #252836">DRAM</td></tr>
+<tr><td style="padding:6px 8px;border:1px solid #252836">Cell Construction</td><td style="padding:6px 8px;border:1px solid #252836">6 transistors (flip-flop)</td><td style="padding:6px 8px;border:1px solid #252836">1 transistor + 1 capacitor</td></tr>
+<tr><td style="padding:6px 8px;border:1px solid #252836">Refresh Needed?</td><td style="padding:6px 8px;border:1px solid #252836">NO — retains data as long as powered</td><td style="padding:6px 8px;border:1px solid #252836">YES — capacitor charge leaks; must refresh every ~ms</td></tr>
+<tr><td style="padding:6px 8px;border:1px solid #252836">Speed</td><td style="padding:6px 8px;border:1px solid #252836">Very fast</td><td style="padding:6px 8px;border:1px solid #252836">Slower than SRAM</td></tr>
+<tr><td style="padding:6px 8px;border:1px solid #252836">Cost per bit</td><td style="padding:6px 8px;border:1px solid #252836">Expensive</td><td style="padding:6px 8px;border:1px solid #252836">Cheap</td></tr>
+<tr><td style="padding:6px 8px;border:1px solid #252836">Cell Density</td><td style="padding:6px 8px;border:1px solid #252836">Low (large cell)</td><td style="padding:6px 8px;border:1px solid #252836">High (small cell)</td></tr>
+<tr><td style="padding:6px 8px;border:1px solid #252836">Typical Application</td><td style="padding:6px 8px;border:1px solid #252836">Cache memory, CPU registers</td><td style="padding:6px 8px;border:1px solid #252836">Main memory (RAM) in PCs</td></tr>
+</table><br>
+<strong>Summary:</strong> SRAM is faster and more reliable but expensive and less dense — ideal for cache. DRAM is slower and requires refresh circuitry but is cheap and high-density — ideal for large main memory.`},
+
+{id:118,topic:6,diff:"hard",marks:10,
+ q:"Explain the internal organisation of main memory. How are cells, rows, columns, address decoders, word select lines, and data lines related? How does the choice of memory organisation (e.g. 4Kx1 vs 256x16) affect the number of address and data pins required?",
+ hint:"Think about rows = words; columns = bits. Address decoder activates one row at a time.",
+ answer:`<strong>Internal Main Memory Organisation:</strong><br>
+Main memory can be visualised as a 2D array of basic cells. Each cell stores one bit. Cells in the same row form a memory word. Cells in the same column share a data (bit) line.<br><br>
+<strong>Key components:</strong><br>
+• <strong>Address Decoder:</strong> Receives n address bits, activates exactly ONE of 2^n word select lines at a time.<br>
+• <strong>Word Select Lines (W₀...W_{2^n-1}):</strong> One per row — enables all cells in that row for read or write simultaneously.<br>
+• <strong>Data (Bit) Lines:</strong> One per column — used to input or output the contents of the selected cells.<br><br>
+<strong>Read:</strong> Decoder activates the row → cells output their values on data lines → data lines carry values to the data bus.<br>
+<strong>Write:</strong> Decoder activates the row → values on data lines are written into all cells in that row.<br><br>
+<strong>Organisation vs. Number of Pins:</strong><br>
+For a total of 4K bits stored:<br>
+• 4K×1: 12 address pins, 1 data pin<br>
+• 1K×4: 10 address pins, 4 data pins<br>
+• 512×8: 9 address pins, 8 data pins<br>
+• 256×16: 8 address pins, 16 data pins<br><br>
+<strong>Implication:</strong> Organisation affects the aspect ratio (rows vs. columns) of the chip array, which impacts chip area utilisation. A more square layout generally uses chip area more efficiently. This trade-off guides the choice of memory chip organisation by manufacturers.`},
+
+// ---- TOPIC 7: I/O DESIGN ----
+{id:119,topic:7,diff:"hard",marks:12,
+ q:"Explain the three modes of I/O transfer: Programmed I/O, Interrupt-Driven I/O, and Direct Memory Access (DMA). For each mode, describe how control is managed, and state the main advantage and disadvantage.",
+ hint:"Key question for each: who controls the transfer and when?",
+ answer:`<strong>1. Programmed I/O (Polling):</strong><br>
+The CPU controls the entire transfer. The protocol is programmed as routines run under CPU control. The CPU continuously checks (polls) the status register of the I/O device to determine readiness before transferring data.<br>
+• <strong>Advantage:</strong> Simple to implement; no special hardware required.<br>
+• <strong>Disadvantage:</strong> Very slow — the CPU wastes cycles polling, and cannot do other work during the transfer (busy-waiting). Only suitable for one character at a time (e.g. keyboard).<br><br>
+<strong>2. Interrupt-Driven I/O:</strong><br>
+The CPU initiates the transfer, then continues with other work. When the I/O device is ready (or transfer is complete), it sends an interrupt signal to the CPU. The CPU suspends its current task, saves its state, and executes an Interrupt Service Routine (ISR) to handle the transfer, then restores its state.<br>
+• <strong>Advantage:</strong> CPU is free to do other work while waiting for I/O — much more efficient than polling.<br>
+• <strong>Disadvantage:</strong> Interrupt handling overhead (saving/restoring state) can be significant for high-speed, high-volume transfers.<br><br>
+<strong>3. Direct Memory Access (DMA):</strong><br>
+A dedicated DMA controller manages the transfer directly between the I/O device and main memory, without CPU involvement. The CPU only initialises the transfer (start address, byte count, direction) then is free to do other work. The DMA controller issues bus cycles to memory independently. When done, it interrupts the CPU.<br>
+• <strong>Advantage:</strong> Minimal CPU involvement — ideal for large, high-speed bulk data transfers (e.g. disk, network).<br>
+• <strong>Disadvantage:</strong> Requires dedicated DMA controller hardware; DMA and CPU may compete for bus access (bus contention).`},
+
+{id:120,topic:7,diff:"medium",marks:8,
+ q:"Compare Shared I/O (Isolated I/O) and Memory-Mapped I/O. For each, describe how devices are addressed, what instructions are used, and state which processor families have adopted each approach.",
+ hint:"Shared I/O = separate address space; Memory-Mapped = I/O registers treated as memory locations.",
+ answer:`<strong>Shared I/O (Isolated I/O):</strong><br>
+• I/O devices are assigned addresses from a <em>separate address space</em>, isolated from the memory address space.<br>
+• Special I/O instructions are used: INPUT (to read from device) and OUTPUT (to write to device).<br>
+• The CPU uses a separate control line to distinguish memory access from I/O access.<br>
+• Address decoder circuitry in each device identifies when its address is selected.<br>
+• <strong>Advantage:</strong> Clear separation between memory and I/O address spaces.<br>
+• <strong>Disadvantage:</strong> Requires special I/O instructions in the instruction set; more complex instruction set design.<br>
+• <strong>Adopted by: Intel (x86 architecture).</strong><br><br>
+<strong>Memory-Mapped I/O:</strong><br>
+• I/O device registers are mapped into the <em>main memory address space</em> — treated as regular memory locations.<br>
+• Standard LOAD/READ and STORE/WRITE instructions are used to access I/O devices — no special I/O instructions needed.<br>
+• Example: a READ from address 0xFF00 might read from a keyboard register rather than actual memory.<br>
+• <strong>Advantage:</strong> Simpler instruction set — all memory addressing modes can be used for I/O; no need for special I/O instructions.<br>
+• <strong>Disadvantage:</strong> Reduces the available memory address space (some addresses are reserved for I/O devices).<br>
+• <strong>Adopted by: Motorola.</strong>`},
+
+{id:121,topic:7,diff:"hard",marks:10,
+ q:"Explain the Interrupt mechanism in detail. What conditions can cause an interrupt? List the steps performed by an Interrupt Service Routine (ISR). Compare Daisy Chain Bus Arbitration (DCBA) and Independent Source Bus Arbitration (ISBA) for handling simultaneous interrupt requests.",
+ hint:"Think: what triggers an interrupt? How does the CPU know who interrupted it?",
+ answer:`<strong>Conditions that cause an interrupt:</strong><br>
+1. Power failure detected by sensor<br>
+2. Arithmetic conditions (overflow, underflow)<br>
+3. Illegal data or illegal instruction code<br>
+4. Errors in data transmission or storage<br>
+5. Software-generated interrupts (user program requests)<br>
+6. Normal completion of an asynchronous I/O transfer<br><br>
+<strong>Steps performed by an ISR:</strong><br>
+1. Disable further interrupts (temporarily)<br>
+2. Save the processor status (all registers, PC, PSW)<br>
+3. Enable further interrupts (to allow higher-priority interrupts)<br>
+4. Determine the cause of the interrupt<br>
+5. Service the interrupt (execute the relevant I/O or error handling code)<br>
+6. Disable interrupts again<br>
+7. Restore processor status (reload saved registers)<br>
+8. Return from interrupt (resume interrupted program at the saved PC)<br><br>
+<strong>DCBA (Daisy Chain Bus Arbitration):</strong><br>
+• All devices share a single interrupt request line (INR).<br>
+• The CPU sends a grant signal down a daisy-chained grant line (GL).<br>
+• Priority = physical proximity to CPU — the nearest device gets the grant first (highest priority).<br>
+• Simple but inflexible — priority is fixed by physical position.<br><br>
+<strong>ISBA (Independent Source Bus Arbitration):</strong><br>
+• Each device has its OWN dedicated interrupt request AND grant lines.<br>
+• Priority does NOT depend on physical location — a separate priority arbitration circuit determines which simultaneous request to grant.<br>
+• More flexible (priority can be set by the circuit), but requires more wires and complex arbitration hardware.`},
+
+// ---- TOPIC 8: PIPELINING ----
+{id:122,topic:8,diff:"hard",marks:12,
+ q:"Explain the concept of pipelining. Define and derive the three performance metrics: Speed-up S(n), Throughput U(n), and Efficiency E(n) for an n-stage pipeline executing m tasks. State the ideal (theoretical maximum) for each metric as m → ∞.",
+ hint:"n + m − 1 total time units. Speed-up = sequential time / pipelined time.",
+ answer:`<strong>Pipelining:</strong> A technique in which a task is divided into n sequential subtasks, each performed by a dedicated functional unit (stage). All stages operate simultaneously on different tasks — like an assembly line. This improves throughput compared to sequential execution.<br><br>
+<strong>Setup:</strong> Each stage takes T = t time units. An n-stage pipeline executing m tasks.<br>
+• Sequential time (no pipeline): m × n time units<br>
+• Pipelined time: n + m − 1 time units (n to fill pipeline, then 1 per remaining task)<br><br>
+<strong>1. Speed-up S(n):</strong><br>
+S(n) = (Sequential time) / (Pipelined time) = (m × n) / (n + m − 1)<br>
+As m → ∞: S(n) → n &nbsp; (theoretical n-fold speed-up)<br><br>
+<strong>2. Throughput U(n):</strong><br>
+U(n) = m / (n + m − 1) tasks per unit time<br>
+As m → ∞: U(n) → 1 (one task completed per clock cycle)<br><br>
+<strong>3. Efficiency E(n):</strong><br>
+E(n) = S(n) / n = m / [n × (n + m − 1)]<br>
+As m → ∞: E(n) → 1 (100% — all stages always busy)<br><br>
+<strong>Practical note:</strong> The ideal values are theoretical. In practice, pipeline hazards (stalls due to dependencies, cache misses, branch instructions) reduce speed-up and efficiency significantly.`},
+
+{id:123,topic:8,diff:"hard",marks:10,
+ q:"What are pipeline hazards? Explain the concept of a pipeline stall (bubble) and describe how instruction dependency (specifically conditional branch instructions) causes stalls. Using a 4-stage pipeline (IF, ID, IE, IS) and 10 instructions where I4 is a conditional branch (branch not taken), draw or describe the resulting pipeline timing diagram (Gantt chart) showing where stalls occur.",
+ hint:"When I4 is fetched, the pipeline stalls until the branch result is known (after IE stage of I4).",
+ answer:`<strong>Pipeline Hazard:</strong> A condition that prevents the pipeline from executing instructions at full rate, causing stalls.<br><br>
+<strong>Pipeline Stall (Bubble):</strong> A stall occurs when one stage requires more time than the standard clock period, forcing subsequent stages to idle (wait). This creates 'bubbles' — wasted cycles in the pipeline.<br><br>
+<strong>Instruction Dependency:</strong> Fetching or executing an instruction depends on the result of a previous instruction. The most common case is a <strong>conditional branch</strong> — the next instruction to fetch depends on whether the branch is taken or not, which is only known after the branch executes (IE stage).<br><br>
+<strong>4-Stage Pipeline: IF→ID→IE→IS</strong><br>
+With I4 as a conditional branch (branch NOT taken, stall until branch result stored):<br><br>
+<pre style="font-family:Space Mono,monospace;font-size:12px;color:#a78bfa;overflow-x:auto">
+Clock:  1   2   3   4   5   6   7   8   9  10  11  12  ...
+I1:    IF  ID  IE  IS
+I2:        IF  ID  IE  IS
+I3:            IF  ID  IE  IS
+I4(BR):            IF  ID  IE  IS
+       ← Pipeline stalls here: I5–I10 wait for I4 result →
+I5:                        IF  ID  IE  IS
+I6:                            IF  ID  IE  IS
+...
+</pre>
+<strong>Stall impact:</strong> 3 extra cycles are wasted waiting for the branch result. The stall delay = (number of stages after IF that must complete before branch outcome is known).<br><br>
+<strong>Solutions to branch hazards:</strong> Branch prediction (guess taken/not-taken), delayed branching, or speculative execution.`},
+
+{id:124,topic:8,diff:"medium",marks:8,
+ q:"Explain what a pipeline stall is and give two different reasons why a pipeline might stall. For each reason, briefly describe one technique used to reduce or eliminate the stall.",
+ hint:"Cache miss? Branch dependency? Think: what makes a stage take longer than expected?",
+ answer:`A <strong>pipeline stall</strong> occurs when one pipeline stage requires more time than the allocated clock period, forcing subsequent stages to idle and wait — introducing wasted cycles (bubbles).<br><br>
+<strong>Reason 1: Cache Miss on Instruction Fetch</strong><br>
+If a cache miss occurs during IF, the processor must fetch the instruction from main memory, which takes several extra clock cycles. All downstream stages stall while waiting.<br>
+<strong>Solution:</strong> Use a larger or more effective instruction cache (L1 cache); implement <em>prefetching</em> — predict which instructions will be needed next and load them into cache in advance.<br><br>
+<strong>Reason 2: Instruction Dependency (Branch Hazard)</strong><br>
+When a conditional branch is encountered, the pipeline cannot know which instruction to fetch next until the branch condition is evaluated (IE stage). The pipeline stalls until the result is available.<br>
+<strong>Solution:</strong> <em>Branch prediction</em> — the processor guesses (predicts) whether the branch is taken or not and continues fetching from the predicted path. If the prediction is correct, no stall occurs. If wrong, the incorrectly fetched instructions are flushed (pipeline is squashed). Modern processors achieve >95% prediction accuracy using dynamic branch predictors.`},
+];
+
+// =====================================================================
+// STATE
+// =====================================================================
+let mcqTopic = "all";
+let theoryTopic = "all";
+let currentMode = "study";
+let answered = {};
+let correctCount = 0;
+let mcqDisplay = [...ALL_MCQ];
+let theoryDisplay = [...ALL_THEORY];
+
+// =====================================================================
+// INIT
+// =====================================================================
+document.getElementById('mcq-total').textContent = ALL_MCQ.length;
+document.getElementById('theory-total').textContent = ALL_THEORY.length;
+
+// Pill listeners
+document.getElementById('mcq-pills').addEventListener('click', e => {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  mcqTopic = pill.dataset.topic;
+  document.querySelectorAll('#mcq-pills .pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  renderMCQ();
+});
+
+document.getElementById('theory-pills').addEventListener('click', e => {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  theoryTopic = pill.dataset.topic;
+  document.querySelectorAll('#theory-pills .pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  renderTheory();
+});
+
+// =====================================================================
+// PANEL SWITCHING
+// =====================================================================
+function switchPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelector('.' + name + '-tab').classList.add('active');
+}
+
+// =====================================================================
+// MCQ RENDERING
+// =====================================================================
+function renderMCQ() {
+  const filtered = mcqTopic === "all" ? mcqDisplay : mcqDisplay.filter(q => q.topic === parseInt(mcqTopic));
+  document.getElementById('mcq-visible').textContent = filtered.length;
+  const c = document.getElementById('mcq-container');
+  if (!filtered.length) { c.innerHTML = '<div class="no-results">No questions for this topic.</div>'; return; }
+  c.innerHTML = filtered.map((q, i) => buildMCQCard(q, i + 1)).join('');
+}
+
+function buildMCQCard(q, idx) {
+  const tc = TOPICS[q.topic].color;
+  const tl = TOPICS[q.topic].label;
+  const ansKey = 'q' + q.id;
+  const isAnswered = answered[ansKey] !== undefined;
+
+  const opts = q.options.map((opt, i) => {
+    let cls = 'option';
+    if (currentMode === 'quiz' && isAnswered) {
+      cls += ' disabled';
+      if (i === q.answer) cls += (answered[ansKey] !== i) ? ' reveal-correct' : ' correct';
+      if (i === answered[ansKey] && answered[ansKey] !== q.answer) cls += ' wrong';
+    }
+    return `<div class="${cls}" onclick="pickOption(${q.id},${i},${q.answer})" data-i="${i}">
+      <span class="opt-letter">${String.fromCharCode(65+i)}.</span><span>${opt}</span>
+    </div>`;
+  }).join('');
+
+  const ansShow = currentMode === 'study' ? '' : (isAnswered ? ' show' : '');
+
+  return `<div class="q-card ${tc}" id="card-${q.id}">
+    <div class="q-meta">
+      <span class="q-num">Q${idx}</span>
+      <span class="q-topic ${tl}">TOPIC ${q.topic}: ${TOPICS[q.topic].name.toUpperCase()}</span>
+      <span class="q-type">MCQ</span>
+      <span class="q-diff diff-${q.diff} diff">${q.diff.charAt(0).toUpperCase()+q.diff.slice(1)}</span>
+    </div>
+    <div class="q-text">${q.q}</div>
+    <div class="options" id="opts-${q.id}">${opts}</div>
+    <div class="answer-section${ansShow}" id="ans-${q.id}">
+      <div class="answer-label">// ANSWER & EXPLANATION</div>
+      <div class="answer-text"><strong>Correct: ${String.fromCharCode(65+q.answer)}. ${q.options[q.answer]}</strong><br><br>${q.explanation}</div>
+    </div>
+    <div class="card-actions">
+      ${currentMode === 'study' ? `<button class="btn primary" onclick="toggleAns('${q.id}')">TOGGLE ANSWER</button>` : ''}
+    </div>
+  </div>`;
+}
+
+window.pickOption = function(qId, sel, ans) {
+  if (currentMode !== 'quiz') return;
+  const k = 'q' + qId;
+  if (answered[k] !== undefined) return;
+  answered[k] = sel;
+  if (sel === ans) correctCount++;
+  const opts = document.querySelectorAll('#opts-' + qId + ' .option');
+  opts.forEach((el, i) => {
+    el.classList.add('disabled');
+    if (i === ans) el.classList.add(sel === i ? 'correct' : 'reveal-correct');
+    if (i === sel && sel !== ans) el.classList.add('wrong');
+  });
+  const ae = document.getElementById('ans-' + qId);
+  if (ae) ae.classList.add('show');
+  updateStats();
+  checkAllAnswered();
+};
+
+window.toggleAns = function(id) {
+  const el = document.getElementById('ans-' + id);
+  if (el) el.classList.toggle('show');
+};
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  renderMCQ();
+}
+
+function revealAll() { document.querySelectorAll('#mcq-container .answer-section').forEach(e => e.classList.add('show')); }
+function hideAll() { document.querySelectorAll('#mcq-container .answer-section').forEach(e => e.classList.remove('show')); }
+function shuffleMCQ() { mcqDisplay = [...mcqDisplay].sort(() => Math.random()-.5); renderMCQ(); }
+function resetQuiz() {
+  answered = {}; correctCount = 0;
+  document.getElementById('score-box').classList.remove('show');
+  updateStats(); renderMCQ();
+}
+
+function updateStats() {
+  const ans = Object.keys(answered).length;
+  const pct = ans === 0 ? 0 : Math.round((correctCount/ans)*100);
+  document.getElementById('answered-display').textContent = ans;
+  document.getElementById('score-display').textContent = pct + '%';
+}
+
+function checkAllAnswered() {
+  const vis = mcqTopic === "all" ? mcqDisplay : mcqDisplay.filter(q => q.topic === parseInt(mcqTopic));
+  const all = vis.every(q => answered['q'+q.id] !== undefined);
+  if (all && vis.length > 0 && currentMode === 'quiz') {
+    const correct = vis.filter(q => answered['q'+q.id] === q.answer).length;
+    document.getElementById('final-score').textContent = correct + '/' + vis.length;
+    const sb = document.getElementById('score-box');
+    sb.classList.add('show');
+    sb.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+// =====================================================================
+// THEORY RENDERING
+// =====================================================================
+function renderTheory() {
+  const filtered = theoryTopic === "all" ? theoryDisplay : theoryDisplay.filter(q => q.topic === parseInt(theoryTopic));
+  const c = document.getElementById('theory-container');
+  if (!filtered.length) { c.innerHTML = '<div class="no-results">No theory questions for this topic.</div>'; return; }
+  c.innerHTML = filtered.map((q, i) => buildTheoryCard(q, i + 1)).join('');
+}
+
+function buildTheoryCard(q, idx) {
+  const tc = TOPICS[q.topic].color;
+  const tl = TOPICS[q.topic].label;
+  return `<div class="q-card ${tc}" id="tcard-${q.id}">
+    <div class="q-meta">
+      <span class="q-num">Q${idx}</span>
+      <span class="q-topic ${tl}">TOPIC ${q.topic}: ${TOPICS[q.topic].name.toUpperCase()}</span>
+      <span class="q-type">THEORY / ESSAY</span>
+      <span class="marks-badge">${q.marks} MARKS</span>
+      <span class="q-diff diff-${q.diff} diff">${q.diff.charAt(0).toUpperCase()+q.diff.slice(1)}</span>
+    </div>
+    <div class="q-text">${q.q}</div>
+    <div class="theory-hint">
+      <div class="theory-hint-label">// APPROACH HINT</div>
+      <div class="theory-hint-text">${q.hint}</div>
+    </div>
+    <div class="short-answer-wrap">
+      <textarea placeholder="Write your answer here before revealing the model answer..."></textarea>
+    </div>
+    <div class="answer-section" id="tans-${q.id}">
+      <div class="answer-label">// MODEL ANSWER</div>
+      <div class="answer-text">${q.answer}</div>
+    </div>
+    <div class="card-actions">
+      <button class="btn primary" onclick="toggleTAns(${q.id})">TOGGLE MODEL ANSWER</button>
+    </div>
+  </div>`;
+}
+
+window.toggleTAns = function(id) {
+  const el = document.getElementById('tans-' + id);
+  if (el) el.classList.toggle('show');
+};
+
+function revealAllTheory() { document.querySelectorAll('#theory-container .answer-section').forEach(e => e.classList.add('show')); }
+function hideAllTheory() { document.querySelectorAll('#theory-container .answer-section').forEach(e => e.classList.remove('show')); }
+function shuffleTheory() { theoryDisplay = [...theoryDisplay].sort(() => Math.random()-.5); renderTheory(); }
+
+// =====================================================================
+// BOOT
+// =====================================================================
+renderMCQ();
+renderTheory();
+</script>
+</body>
+</html>
